@@ -1,0 +1,7 @@
+
+export default function page(){
+  return (
+    <div>home page 1</div>
+  )
+}
+
