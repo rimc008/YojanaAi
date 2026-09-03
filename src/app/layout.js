@@ -16,9 +16,9 @@ export default function layout({children}) {
     <html>
      <body>
 
-      <nav>
+      <nav className="relative sticky top-0">
 
-        <div className="grid grid-cols-[1fr_4fr_0.5fr] md:grid-cols-[1fr_2fr_1fr] lg:grid-cols-[1fr_2fr_1fr] border p-2 shadow-xl/30 shadow-gray-500 border-gray-300">
+        <div className="grid grid-cols-[1fr_4fr_0.5fr] md:grid-cols-[1fr_2fr_1fr] lg:grid-cols-[1fr_2fr_1fr] border p-2 shadow-xl/30 shadow-gray-500 border-gray-300 bg-white">
 
           <div className="flex justify-center gap-2">
             <p className="px-2 text-center text-white border rounded-md bg-green-600">Y</p>
@@ -47,12 +47,16 @@ export default function layout({children}) {
           <div className="block md:hidden flex justify-end cursor-pointer" onClick={()=>setMenuUnfold(!menuUnfold)}><AiOutlineMenuUnfold size={25}/></div>
         </div>
         {(
-          <div className="block md:hidden flex justify-end transition-all">
-            <div className={`flex flex-col overflow-hidden ${menuUnfold?"max-h-60 w-40":"max-h-0 w-40"} border border-gray-300 bg-green-100 transition-all duration-300 ease-in-out rounded-md shadow-xl/30 `}>
-              <p className="cursor-pointer rounded-l-md border border-b-gray-300 border-green-100 hover:bg-green-600 hover:text-white pl-1 hover:px-2 hover:pb-0.5 transition-all">Home</p>
-              <p className="cursor-pointer hover:bg-green-600 border border-b-gray-300 border-green-100 hover:text-white pl-1 hover:px-2 hover:pb-0.5 transition-all">Schemes</p>
-              <p className="cursor-pointer hover:bg-green-600 border border-b-gray-300 border-green-100 hover:text-white pl-1 hover:px-2 hover:pb-0.5 transition-all">Check Eligibility</p>
+          <div className="block md:hidden transition-all absolute z-100 font-semibold">
+            <div className={`flex flex-col overflow-hidden ${menuUnfold?"max-h-60 w-[100vw]":"max-h-0 w-[100vw]"} border border-gray-300 bg-green-100 transition-all duration-300 ease-in-out rounded-md shadow-xl/30 `}>
+
+              <Link href="/home"><p className="cursor-pointer rounded-l-md border border-b-gray-300 border-green-100 hover:bg-green-600 hover:text-white pl-1 hover:px-2 hover:pb-0.5 transition-all">Home</p></Link>
+
+              <Link href="/schemes"><p className="cursor-pointer hover:bg-green-600 border border-b-gray-300 border-green-100 hover:text-white pl-1 hover:px-2 hover:pb-0.5 transition-all">Schemes</p></Link>
+
+              <Link href="/ligibility"><p className="cursor-pointer hover:bg-green-600 border border-b-gray-300 border-green-100 hover:text-white pl-1 hover:px-2 hover:pb-0.5 transition-all">Check Eligibility</p></Link>
               <p className="cursor-pointer rounded-l-md hover:bg-green-600 hover:text-white pl-1 hover:px-2 hover:pb-0.5 transition-all">Ai recommendation</p>
+
             </div>
           </div>
         )}
