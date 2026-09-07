@@ -1,29 +1,38 @@
 import pandas as pd
 from dotenv import load_dotenv
 from pymongo import MongoClient
-import kagglehub
+from datasets import load_dataset
 import os
 
 load_dotenv()
 
-path = kagglehub.dataset_download(# kaggle_database
-    "jainamgada45/indian-government-schemes"
-)
-file_csv = os.listdir(path)[0] 
-df = pd.read_csv(os.path.join(path, file_csv))
+# Download/load dataset from Hugging Face
+ds = load_dataset("smartduketech/indian-government-schemes-2025")
+
+# Convert Hugging Face dataset to pandas DataFrame
+df = ds["train"].to_pandas()
 
 
 mongo = os.getenv("MONGODB_URI")
 client = MongoClient(mongo)
-db = client["database_scheme"] # database name
+db = client["scheme_dataset"] # database name
 collection = db["schemes"] # collection mane
 
 
-
-
 data = df.to_dict(orient="records")
-collection.insert_many(data)
+
+b = []
+c = []
+
+for a in data:
+
+    if pd.notna(a["category"]) and pd.notna(a["state"]):
+        b.extend(a["category"].split(","))
+        c.append(a["state"])
+
+print(set(b),len(set(b)))
+print(set(c),len(set(c)))
 
 
-print("Data inserted successfully!")
+print("..")
 
