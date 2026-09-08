@@ -5,6 +5,8 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import AppContextProvider from "@/context/AppContext";
+
 
 
 export default function layout({children}) {
@@ -16,7 +18,7 @@ export default function layout({children}) {
     <html>
      <body>
 
-      <nav className="relative sticky top-0">
+      <nav className="relative sticky top-0 z-1000">
 
         <div className="grid grid-cols-[1fr_4fr_0.5fr] md:grid-cols-[1fr_2fr_1fr] lg:grid-cols-[1fr_2fr_1fr] border p-2 shadow-xl/30 shadow-gray-500 border-gray-300 bg-white">
 
@@ -62,8 +64,9 @@ export default function layout({children}) {
         )}
       </nav>
 
-
+      <AppContextProvider>
        {children}
+      </AppContextProvider>
 
      </body>
     </html>

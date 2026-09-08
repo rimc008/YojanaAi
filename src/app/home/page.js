@@ -1,3 +1,4 @@
+"use client"
 import {
   FaSeedling,
   FaGraduationCap,
@@ -14,80 +15,99 @@ import {
   FaCircleCheck,
   FaRobot,
 } from "react-icons/fa6";
+import Link from "next/link";
 
 import { MdHealthAndSafety } from "react-icons/md";
 
+import { useEffect, useState } from "react";
 
-const categories = [
-  {
-    name: "Agriculture",
-    description: "Farmer subsidy and support schemes",
-    icon: <FaSeedling />,
-  },
-  {
-    name: "Education",
-    description: "Scholarships and education support",
-    icon: <FaGraduationCap />,
-  },
-  {
-    name: "Employment",
-    description: "Job and skill development opportunities",
-    icon: <FaBriefcase />,
-  },
-  {
-    name: "Energy",
-    description: "Solar and renewable energy schemes",
-    icon: <FaBolt />,
-  },
-  {
-    name: "Health",
-    description: "Healthcare and medical assistance",
-    icon: <MdHealthAndSafety />,
-  },
-  {
-    name: "Housing",
-    description: "Affordable housing and development",
-    icon: <FaHouse />,
-  },
-  {
-    name: "Infrastructure",
-    description: "Roads and infrastructure support",
-    icon: <FaRoad />,
-  },
-  {
-    name: "MSME",
-    description: "Business and enterprise support",
-    icon: <FaBuilding />,
-  },
-  {
-    name: "Social Welfare",
-    description: "Social security and welfare schemes",
-    icon: <FaPeopleGroup />,
-  },
-  {
-    name: "Startup",
-    description: "Startup support programs and funding",
-    icon: <FaRocket />,
-  },
-  {
-    name: "Women",
-    description: "Women empowerment schemes",
-    icon: <FaUser />,
-  },
+const categoryIcons = [
+    { pattern: /agriculture|farmer/i, icon: FaSeedling },
+    { pattern: /education|scholarship|student/i, icon: FaGraduationCap },
+    { pattern: /employment|job|skill/i, icon: FaBriefcase },
+    { pattern: /energy|solar/i, icon: FaBolt },
+    { pattern: /health|medical/i, icon: MdHealthAndSafety },
+    { pattern: /housing|house/i, icon: FaHouse },
+    { pattern: /infrastructure|road/i, icon: FaRoad },
+    { pattern: /msme|enterprise|business/i, icon: FaBuilding },
+    { pattern: /social|welfare/i, icon: FaPeopleGroup },
+    { pattern: /startup/i, icon: FaRocket },
+    { pattern: /women|girl/i, icon: FaUser },
 ];
 
+function getCategoryIcon(categoryName) {
+    const match = categoryIcons.find(
+        ({ pattern }) => pattern.test(categoryName)
+    );
 
-const featuredSchemes = [
-  "PM-KISAN",
-  "Ayushman Bharat",
-  "PM Awas Yojana",
-  "PM Vishwakarma",
-  "National Scholarship Portal",
-  "MUDRA Yojana",
-];
+    return match ? match.icon : FaCircleCheck;
+}
 
 
 export default function Home() {
+
+  const [categories,setCategories] = useState([])
+  const [viewall,setViewall] = useState(false)
+  const [featuredSchemes,setFeaturedSchemes] = useState([])
+  const [browseall,setBrowseall] = useState(false)
+
+  useEffect(()=>{
+
+    const categories_function = async() => {
+      try {
+
+        const as = await fetch("http://localhost:3000/api/scheme_categories",
+          {
+            method:"GET",
+            headers : {"Content-Type":"application/json"}
+          })
+
+        const data = await as.json()
+
+        if (data.success){
+          setCategories(data.message)
+        }
+        else{
+          console.log(data.message);       
+        }
+
+      } catch (error) {
+        
+        console.log(error.message);
+        
+      }
+    }
+
+    const featuredSchemes_function = async() => {
+      try {
+
+        const as = await fetch("http://localhost:3000/api/featured_schemes",
+          {
+            method:"GET",
+            headers : {"Content-Type":"application/json"}
+          })
+
+        const data1 = await as.json()
+
+        if (data1.success){
+          setFeaturedSchemes(data1.message)
+        }
+        else{
+          console.log(data1.message);       
+        }
+
+      } catch (error) {
+        
+        console.log(error.message);
+        
+      }
+    }
+
+
+    categories_function();
+    featuredSchemes_function();
+  },[])
+
   return (
     <main className="min-h-screen bg-white text-slate-800">
 
@@ -268,7 +288,7 @@ export default function Home() {
                 overflow-hidden
                 rounded-xl
                 border
-                border-slate-200
+                border-green-500
                 bg-white
                 shadow-lg
                 shadow-slate-200/50
@@ -702,16 +722,18 @@ export default function Home() {
 
             <button
               className="
-                hidden
                 items-center
                 gap-1
                 text-xs
                 font-medium
                 text-green-600
-                sm:flex
+                flex
+                hover:text-green-800
+                transition-all
               "
+              onClick={()=> setViewall(!viewall)}
             >
-              View all
+              {viewall ? "View less" : "View top 30"}
 
               <FaArrowRight size={10} />
             </button>
@@ -722,7 +744,7 @@ export default function Home() {
           {/* CATEGORY GRID */}
 
           <div
-            className="
+            className={`
               mt-7
               grid
               grid-cols-1
@@ -730,13 +752,17 @@ export default function Home() {
               sm:grid-cols-2
               md:grid-cols-3
               lg:grid-cols-4
-            "
+              
+              `}
+            
           >
 
-            {categories.map((category) => (
+            {(viewall ? categories.slice(0,30) : categories.slice(0,11)).map((category) => {
 
+              const Icon = getCategoryIcon(category[0])
+
+              return (
               <button
-                key={category.name}
                 className="
                   group
                   flex
@@ -745,14 +771,16 @@ export default function Home() {
                   rounded-lg
                   border
                   border-slate-200
-                  bg-white
+                  bg-green-100
                   p-4
                   text-left
                   transition
                   duration-200
                   hover:-translate-y-0.5
-                  hover:border-green-200
+                  hover:border-black
                   hover:shadow-md
+                  hover:bg-green-300
+                  z-500
                 "
               >
 
@@ -773,7 +801,7 @@ export default function Home() {
                     group-hover:bg-green-100
                   "
                 >
-                  {category.icon}
+                  <Icon size={20}/>
                 </div>
 
 
@@ -782,7 +810,7 @@ export default function Home() {
                 <div className="min-w-0">
 
                   <h3 className="text-xs font-semibold">
-                    {category.name}
+                    {category[0]}
                   </h3>
 
 
@@ -792,39 +820,21 @@ export default function Home() {
                       line-clamp-2
                       text-[10px]
                       leading-4
-                      text-slate-400
+                      text-black
                     "
                   >
-                    {category.description}
+                    {category[1]}
                   </p>
 
                 </div>
 
               </button>
 
-            ))}
+              )
+
+           })}
 
           </div>
-
-
-          {/* MOBILE VIEW ALL */}
-
-          <button
-            className="
-              mt-5
-              flex
-              items-center
-              gap-1
-              text-xs
-              font-medium
-              text-green-600
-              sm:hidden
-            "
-          >
-            View all
-
-            <FaArrowRight size={10} />
-          </button>
 
         </div>
 
@@ -874,8 +884,9 @@ export default function Home() {
                 transition
                 hover:text-green-700
               "
+              onClick={()=>setBrowseall(!browseall)}
             >
-              Browse all
+              {browseall ? "Browse less" : "Browse all"}
 
               <FaArrowRight size={10} />
             </button>
@@ -896,25 +907,29 @@ export default function Home() {
             "
           >
 
-            {featuredSchemes.map((scheme) => (
+            {(browseall ? featuredSchemes.slice(0,10) : featuredSchemes.slice(0,6)).map((scheme) => {
 
-              <div
-                key={scheme}
-                className="
+              const Icon1 = getCategoryIcon(scheme.description)
+
+              return (
+              <Link href={`/details/${scheme.slug}`} className="
                   group
                   min-h-36
                   rounded-lg
                   border
                   border-slate-200
-                  bg-slate-50
+                  bg-green-100
                   p-5
                   transition
                   duration-200
                   hover:-translate-y-1
-                  hover:border-green-100
-                  hover:bg-white
+                  hover:border-black
+                  hover:bg-green-300
                   hover:shadow-md
-                "
+                  flex
+                  flex-col
+                  justify-evenly
+                "><div
               >
 
                 {/* ICON */}
@@ -932,14 +947,14 @@ export default function Home() {
                     shadow-sm
                   "
                 >
-                  <FaCircleCheck size={15} />
+                  <Icon1 size={20} />
                 </div>
 
 
                 {/* SCHEME NAME */}
 
                 <h3 className="mt-4 text-sm font-semibold">
-                  {scheme}
+                  {scheme.name}
                 </h3>
 
 
@@ -950,11 +965,10 @@ export default function Home() {
                     mt-2
                     text-xs
                     leading-5
-                    text-slate-400
+                    text-black
                   "
                 >
-                  Government scheme providing support and benefits
-                  to eligible citizens.
+                  {scheme.description}
                 </p>
 
 
@@ -968,10 +982,8 @@ export default function Home() {
                     gap-1
                     text-xs
                     font-medium
-                    text-green-600
-                    opacity-0
+                    text-black
                     transition
-                    group-hover:opacity-100
                   "
                 >
                   View details
@@ -979,9 +991,10 @@ export default function Home() {
                   <FaArrowRight size={9} />
                 </button>
 
-              </div>
+              </div></Link>
+              )
 
-            ))}
+        })}
 
           </div>
 
