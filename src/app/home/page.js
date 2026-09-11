@@ -762,8 +762,7 @@ export default function Home() {
               const Icon = getCategoryIcon(category[0])
 
               return (
-              <button
-                className="
+              <Link href={{pathname:"/scheme_categoty_pool",query: { category:category[0], department:category[1] }}} className="
                   group
                   flex
                   items-center
@@ -781,8 +780,9 @@ export default function Home() {
                   hover:shadow-md
                   hover:bg-green-300
                   z-500
-                "
-              >
+                ">
+                
+                
 
                 {/* ICON */}
 
@@ -828,7 +828,8 @@ export default function Home() {
 
                 </div>
 
-              </button>
+              
+              </Link> 
 
               )
 

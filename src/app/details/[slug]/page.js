@@ -20,6 +20,7 @@ import {
     FaUsers,
 } from "react-icons/fa6";
 import { useParams } from "next/navigation";
+import ReactMarkdown from "react-markdown";
 
 
 export default function SchemeDetails() {
@@ -531,28 +532,6 @@ export default function SchemeDetails() {
     "
 >
 
-    <div 
-        className="
-            border-b
-            border-green-100
-            bg-gradient-to-r
-            from-green-50
-            to-white
-            px-6
-            py-5
-        "
-    >
-
-        <h2 className="font-bold text-slate-900">
-            Key Benefit
-        </h2>
-
-        <p className="mt-1 text-sm text-slate-600">
-            Benefits and coverage provided under the scheme
-        </p>
-
-    </div>
-
 
     <div className="space-y-7 p-6">
 
@@ -565,42 +544,19 @@ export default function SchemeDetails() {
 
                 <div key={index}>
 
-                    {/* Heading */}
+                    <div className="bg-green-100 p-5">
 
-                    <div className="mb-3 flex items-center gap-3">
-
-                        <div
-                            className="
-                                flex
-                                h-9
-                                w-9
-                                shrink-0
-                                items-center
-                                justify-center
-                                rounded-lg
-                                bg-green-50
-                                text-green-600
-                            "
-                        >
-
-                            <FaCircleCheck />
-
-                        </div>
-
-                        <h3 className="
-                            text-base
-                            font-bold
-                            text-slate-900
-                        ">
-                            {section.title}
-                        </h3>
+                    <SectionTitle 
+                        icon={<FaCircleCheck />}
+                        title="Key Benefit"
+                        subtitle="Benefits and coverage provided under the scheme"
+                    />
 
                     </div>
-
-
+                    
                     {/* Items */}
 
-                    <div className="space-y-2">
+                    <div className="space-y-2 pt-[5%]">
 
                         {
                             section.items.map(
@@ -814,7 +770,101 @@ export default function SchemeDetails() {
 
                         </section>
 
+                        {/* Detailed eligibility text */}
 
+                        <section className="bg-white border border-slate-200 rounded-[20] p-10 shadow-lg">
+
+                        {schemedetails.length !== 0 && schemedetails[0].eligibility_text && (
+
+                            <div className="">
+
+                                <SectionTitle
+                                    icon={<FaShieldHalved />}
+                                    title="Detailed eligibility criteria"
+                                    subtitle="Check the detailed eligibility criteria"
+                                />
+
+                                <div className="space-y-5 pt-5">
+
+
+                                    <ReactMarkdown
+                                        components={{
+
+                                            blockquote: ({ children }) => (
+                                                <div className="
+                                                    rounded-xl
+                                                    border
+                                                    border-green-100
+                                                    bg-green-50/50
+                                                    p-5
+                                                ">
+                                                    {children}
+                                                </div>
+                                            ),
+
+                                            p: ({ children }) => (
+                                                <p className="
+                                                    text-sm
+                                                    leading-7
+                                                    text-slate-700
+                                                ">
+                                                    {children}
+                                                </p>
+                                            ),
+
+                                            ol: ({ children }) => (
+                                                <ol className="
+                                                    ml-5
+                                                    list-decimal
+                                                    space-y-2
+                                                    text-sm
+                                                    leading-7
+                                                    text-slate-700
+                                                ">
+                                                    {children}
+                                                </ol>
+                                            ),
+
+                                            ul: ({ children }) => (
+                                                <ul className="
+                                                    ml-5
+                                                    list-disc
+                                                    space-y-2
+                                                    text-sm
+                                                    leading-7
+                                                    text-slate-700
+                                                ">
+                                                    {children}
+                                                </ul>
+                                            ),
+
+                                            li: ({ children }) => (
+                                                <li className="pl-1">
+                                                    {children}
+                                                </li>
+                                            ),
+
+                                            strong: ({ children }) => (
+                                                <strong className="
+                                                    font-semibold
+                                                    text-slate-900
+                                                ">
+                                                    {children}
+                                                </strong>
+                                            ),
+                                        }}
+                                    >
+                                           
+                                        {schemedetails[0].eligibility_text}
+                                    </ReactMarkdown>
+
+                                </div>
+
+                            </div>
+
+                        )}
+
+                        </section>
                         {/* =================================================
                             APPLICATION PROCESS
                         ================================================== */}
@@ -948,53 +998,51 @@ export default function SchemeDetails() {
                         </section>
 
 
-                        {/* =================================================
-                            DOCUMENTS
+                        {/* ================================================= 
+                            DOCUMENTS 
                         ================================================== */}
 
-                        <section
-                            className="
-                                rounded-2xl 
-                                border 
-                                border-slate-200 
-                                bg-white 
-                                p-6 
-                                shadow-sm 
-                                lg:p-7
-                            "
+                        <section 
+                            className=" 
+                                rounded-2xl  
+                                border  
+                                border-slate-200  
+                                bg-white  
+                                p-6  
+                                shadow-sm  
+                                lg:p-7 
+                            " 
                         >
 
-                            <SectionTitle
-                                icon={<FaFileLines />}
-                                title="Required documents"
-                                subtitle="Documents may vary depending on the application"
+                            <SectionTitle 
+                                icon={<FaFileLines />} 
+                                title="Required documents" 
+                                subtitle="Documents may vary depending on the application" 
                             />
 
 
-                            <div
-                                className="
-                                    mt-6 
-                                    grid 
-                                    gap-3 
-                                    sm:grid-cols-2
-                                "
+                            <div 
+                                className=" 
+                                    mt-6  
+                                    grid  
+                                    gap-3  
+                                    sm:grid-cols-2 
+                                " 
                             >
 
-                                <DocumentItem
-                                    text="Registration Certificate"
-                                />
+                                {schemedetails.length !== 0 &&
+                                    schemedetails[0].documents_required
+                                        ?.split(/\d+\.\s*|[A-Z]\.\s*/)
+                                        .filter(Boolean)
+                                        .map((document, index) => (
 
-                                <DocumentItem
-                                    text="Memorandum of Association"
-                                />
+                                            <DocumentItem 
+                                                key={index}
+                                                text={document.trim()} 
+                                            />
 
-                                <DocumentItem
-                                    text="Articles of Association"
-                                />
-
-                                <DocumentItem
-                                    text="Project-related documents"
-                                />
+                                        ))
+                                }
 
                             </div>
 
@@ -1155,6 +1203,10 @@ export default function SchemeDetails() {
                                 </div>
 
 
+                                <a href={`${schemedetails.length !== 0
+                                            ? schemedetails[0].apply_url
+                                            : ""}`} target="_blank">
+                                
                                 <div className="p-5">
 
                                     <button
@@ -1202,6 +1254,8 @@ export default function SchemeDetails() {
 
                                 </div>
 
+                                </a>
+
                             </div>
 
 
@@ -1236,70 +1290,41 @@ export default function SchemeDetails() {
                                     <InfoRow
                                         icon={<FaBuilding />}
                                         label="Department"
-                                        value="Tourism Department"
+                                        value={
+                                            schemedetails.length !== 0
+                                                ? schemedetails[0].department
+                                                : ""
+                                        }
                                     />
 
                                     <InfoRow
                                         icon={<FaLocationDot />}
                                         label="State"
-                                        value="West Bengal"
+                                        value={
+                                            schemedetails.length !== 0
+                                                ? schemedetails[0].state
+                                                : ""
+                                        }
                                     />
 
                                     <InfoRow
                                         icon={<FaWandSparkles />}
                                         label="Category"
-                                        value="Business & Entrepreneurship"
+                                        value={
+                                        schemedetails.length !== 0
+                                            ? schemedetails[0].category
+                                            : ""
+                                        }
                                     />
 
                                     <InfoRow
                                         icon={<FaUsers />}
                                         label="Beneficiaries"
-                                        value="Business Entity, Individual"
-                                    />
-
-                                </div>
-
-                            </div>
-
-
-                            {/* =================================================
-                                QUICK FACTS
-                            ================================================== */}
-
-                            <div
-                                className="
-                                    rounded-2xl 
-                                    border 
-                                    border-slate-200 
-                                    bg-white 
-                                    p-6 
-                                    shadow-sm
-                                "
-                            >
-
-                                <h3 className="font-bold text-slate-900">
-                                    Quick facts
-                                </h3>
-
-
-                                <div className="mt-5 space-y-4">
-
-                                    <QuickFact
-                                        icon={<FaCalendarDays />}
-                                        title="Special area benefit"
-                                        value="Up to 10 years"
-                                    />
-
-                                    <QuickFact
-                                        icon={<FaIndianRupeeSign />}
-                                        title="Incentive"
-                                        value="60%"
-                                    />
-
-                                    <QuickFact
-                                        icon={<FaGlobe />}
-                                        title="Application mode"
-                                        value="Online"
+                                        value={
+                                            schemedetails.length !== 0
+                                                ? schemedetails[0].beneficiary_type
+                                                : ""
+                                        }
                                     />
 
                                 </div>
@@ -1325,17 +1350,17 @@ export default function SchemeDetails() {
                                 <h3 className="font-bold text-slate-900">
                                     Official resources
                                 </h3>
+                                
 
 
                                 <div className="mt-4 space-y-2">
 
-                                    <ResourceLink
+                                    <a href={`${schemedetails.length !== 0
+                                            ? schemedetails[0].official_url
+                                            : ""}`} target="_blank"><ResourceLink
                                         title="Official website"
-                                    />
+                                    /></a>
 
-                                    <ResourceLink
-                                        title="Scheme notification"
-                                    />
 
                                 </div>
 
@@ -1742,63 +1767,6 @@ function InfoRow({
                 <p
                     className="
                         mt-0.5 
-                        text-sm 
-                        font-semibold 
-                        text-slate-800
-                    "
-                >
-                    {value}
-                </p>
-
-            </div>
-
-        </div>
-
-    );
-}
-
-
-/* ============================================================
-   QUICK FACT
-============================================================ */
-
-function QuickFact({
-    icon,
-    title,
-    value,
-}) {
-
-    return (
-
-        <div className="flex items-center gap-3">
-
-            <div
-                className="
-                    flex 
-                    h-9 
-                    w-9 
-                    items-center 
-                    justify-center 
-                    rounded-lg 
-                    bg-green-50 
-                    text-green-600
-                "
-            >
-
-                {icon}
-
-            </div>
-
-
-            <div className="flex-1">
-
-                <p className="text-xs text-slate-400">
-                    {title}
-                </p>
-
-
-                <p
-                    className="
                         text-sm 
                         font-semibold 
                         text-slate-800

@@ -7,13 +7,34 @@ export async function GET() {
 
         await db();
 
-        const allSchemes = await Scheme.find({})
-        const uniqueScheme = new Set() 
-        allSchemes.forEach((item) => uniqueScheme.add(`${item.category}|${item.department}`)) // {"..|..","..|..","..|.."}
+        // const allSchemes = await Scheme.find({})
+        // const uniqueScheme = new Set() 
+        // allSchemes.forEach((item) => uniqueScheme.add(`${item.category}|${item.department}`)) // {"..|..","..|..","..|.."}
 
-        const nextUniqueScheme = [...uniqueScheme].map((item) => item.split("|")) // [[..,..],[..,..],[..,..]]
+        // const nextUniqueScheme = [...uniqueScheme].map((item) => item.split("|")) // [[..,..],[..,..],[..,..]]
 
-        return Response.json({"success":true,"message":nextUniqueScheme,"size":nextUniqueScheme.length})
+        const allSchemes = await Scheme.aggregate([
+            {
+                $group: {
+                    _id: {
+                        category: "$category",
+                        department: "$department"
+                    }
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    category: "$_id.category",
+                    department: "$_id.department"
+                }
+            },
+            
+        ]);
+
+        const nextUniqueScheme = allSchemes.map((item)=>[item.category,item.department])
+
+        return Response.json({"success":true,"message":nextUniqueScheme.slice(1),"size":nextUniqueScheme.length})
 
         
     } catch (e) {
