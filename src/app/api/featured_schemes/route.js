@@ -14,7 +14,7 @@ export async function GET(){
             {name:{$regex:"pradhan mantri", $options:"i"}}
         ]})
 
-        if(!featuredSchemes){
+        if(featuredSchemes.length === 0){
             return Response.json({"success":false,"message":"Not findable"})
         }
 

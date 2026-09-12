@@ -6,109 +6,23 @@ import {
   FaMagnifyingGlass,
   FaArrowRight,
   FaFilter,
+  FaCircleXmark,
   FaSeedling,
-  FaHouse,
-  FaHeartPulse,
   FaGraduationCap,
   FaBriefcase,
-  FaBuilding,
   FaBolt,
-  FaCircleXmark,
+  FaHouse,
+  FaRoad,
+  FaBuilding,
+  FaPeopleGroup,
+  FaRocket,
+  FaUser,
+  FaCircleCheck
 } from "react-icons/fa6";
 
+import { MdHealthAndSafety } from "react-icons/md";
 
-const schemes = [
-  {
-    id: 1,
-    name: "PM-KISAN",
-    category: "Agriculture",
-    state: "All India",
-    benefit: "₹6,000 per year",
-    description:
-      "Financial assistance to eligible farmer families for agricultural needs.",
-    icon: <FaSeedling />,
-  },
-  {
-    id: 2,
-    name: "PM Awas Yojana",
-    category: "Housing",
-    state: "All India",
-    benefit: "Housing assistance",
-    description:
-      "Financial assistance to eligible families for affordable housing.",
-    icon: <FaHouse />,
-  },
-  {
-    id: 3,
-    name: "Ayushman Bharat PM-JAY",
-    category: "Health",
-    state: "All India",
-    benefit: "Health cover up to ₹5 lakh",
-    description:
-      "Health insurance coverage for eligible economically vulnerable families.",
-    icon: <FaHeartPulse />,
-  },
-  {
-    id: 4,
-    name: "National Scholarship Scheme",
-    category: "Education",
-    state: "All India",
-    benefit: "Educational scholarship",
-    description:
-      "Financial support for eligible students pursuing higher education.",
-    icon: <FaGraduationCap />,
-  },
-  {
-    id: 5,
-    name: "PM Vishwakarma",
-    category: "Employment",
-    state: "All India",
-    benefit: "Training and financial support",
-    description:
-      "Support for traditional artisans and craftspeople across India.",
-    icon: <FaBriefcase />,
-  },
-  {
-    id: 6,
-    name: "PM MUDRA Yojana",
-    category: "Business",
-    state: "All India",
-    benefit: "Business loans",
-    description:
-      "Loans to support small businesses and micro enterprises.",
-    icon: <FaBuilding />,
-  },
-  {
-    id: 7,
-    name: "PM-KUSUM",
-    category: "Energy",
-    state: "All India",
-    benefit: "Solar energy support",
-    description:
-      "Support for farmers adopting solar-powered agricultural solutions.",
-    icon: <FaBolt />,
-  },
-  {
-    id: 8,
-    name: "Startup India",
-    category: "Business",
-    state: "All India",
-    benefit: "Startup support",
-    description:
-      "Benefits and support for eligible startups and entrepreneurs.",
-    icon: <FaBuilding />,
-  },
-  {
-    id: 9,
-    name: "Skill India",
-    category: "Employment",
-    state: "All India",
-    benefit: "Free skill training",
-    description:
-      "Skill development and training opportunities for eligible citizens.",
-    icon: <FaBriefcase />,
-  },
-];
+import Link from "next/link";
 
 
 const categories = [
@@ -139,32 +53,60 @@ export default function SchemesPage() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All Categories");
   const [state, setState] = useState("All States");
+  const [filteredSchemes,setFilteredSchemes] = useState([]);
+  const [search_action,setSearch_action] = useState(false);
 
-  const filteredSchemes = schemes.filter((scheme) => {
+  const categoryIcons = [
+          { pattern: /agriculture|farmer/i, icon: FaSeedling },
+          { pattern: /education|scholarship|student/i, icon: FaGraduationCap },
+          { pattern: /employment|job|skill/i, icon: FaBriefcase },
+          { pattern: /energy|solar/i, icon: FaBolt },
+          { pattern: /health|medical/i, icon: MdHealthAndSafety },
+          { pattern: /housing|house/i, icon: FaHouse },
+          { pattern: /infrastructure|road/i, icon: FaRoad },
+          { pattern: /msme|enterprise|business/i, icon: FaBuilding },
+          { pattern: /social|welfare/i, icon: FaPeopleGroup },
+          { pattern: /startup/i, icon: FaRocket },
+          { pattern: /women|girl/i, icon: FaUser },
+  ];
 
-    const searchMatch =
-      scheme.name.toLowerCase().includes(search.toLowerCase()) ||
-      scheme.description.toLowerCase().includes(search.toLowerCase()) ||
-      scheme.category.toLowerCase().includes(search.toLowerCase());
+  function getCategoryIcon(categoryName) {
+        const match = categoryIcons.find(
+            ({ pattern }) => pattern.test(categoryName)
+        );
+    
+        return match ? match.icon : FaCircleCheck;
+    }
 
-    const categoryMatch =
-      category === "All Categories" ||
-      scheme.category === category;
+  const filter_function = async(search_item) => {
 
-    const stateMatch =
-      state === "All States" ||
-      scheme.state === "All India" ||
-      scheme.state === state;
+    try {
 
-    return searchMatch && categoryMatch && stateMatch;
-  });
+        const as = await fetch("http://localhost:3000/api/filters",
+          {
+            method:"POST",
+            headers : {"Content-Type":"application/json"},
+            body: JSON.stringify({
+                search_item: `${search_item}`
+            })
+          })
 
+        const data3 = await as.json()
 
-  const clearFilters = () => {
-    setSearch("");
-    setCategory("All Categories");
-    setState("All States");
-  };
+        if (data3.success){
+          setFilteredSchemes(data3.message)
+          setSearch_action(false)
+        }
+        else{
+          console.log(data3.message);       
+        }
+
+      } catch (error) {
+        
+        console.log(error.message);
+        
+      }
+  } 
 
 
   return (
@@ -287,7 +229,7 @@ export default function SchemesPage() {
               max-w-4xl
               rounded-xl
               border
-              border-slate-200
+              border-green-500
               bg-white
               p-2
               shadow-sm
@@ -318,15 +260,6 @@ export default function SchemesPage() {
                 "
               />
 
-              {search && (
-                <button
-                  onClick={() => setSearch("")}
-                  className="mr-2 text-slate-300 transition hover:text-slate-500"
-                >
-                  <FaCircleXmark size={15} />
-                </button>
-              )}
-
               <button
                 className="
                   hidden
@@ -341,6 +274,15 @@ export default function SchemesPage() {
                   hover:bg-green-700
                   sm:block
                 "
+
+                onClick={() => {
+
+                  setSearch_action(!search_action)
+                  console.log(search_action);
+                  
+                  filter_function(search);
+                
+                }}
               >
                 Search
               </button>
@@ -377,7 +319,7 @@ export default function SchemesPage() {
             </div>
 
 
-            {(category !== "All Categories" ||
+            {/* {(category !== "All Categories" ||
               state !== "All States" ||
               search) && (
 
@@ -394,7 +336,7 @@ export default function SchemesPage() {
                 Clear filters
               </button>
 
-            )}
+            )} */}
 
           </div>
 
@@ -672,27 +614,31 @@ export default function SchemesPage() {
               "
             >
 
-              {filteredSchemes.map((scheme) => (
+              {filteredSchemes.map((scheme) => {
 
-                <article
-                  key={scheme.id}
-                  className="
+                const Icon3 = getCategoryIcon(scheme.name)
+
+              return (
+                <Link href={`/details/${scheme.slug}`} className="
                     group
                     flex
                     min-h-64
                     flex-col
                     rounded-xl
                     border
-                    border-slate-200
-                    bg-white
+                    border-slate-300
+                    bg-green-300
                     p-5
-                    shadow-sm
-                    transition
+                    shadow-lg
+                    transition-all
                     duration-200
                     hover:-translate-y-1
-                    hover:border-green-100
-                    hover:shadow-md
-                  "
+                    hover:border-black
+                    hover:bg-green-400
+                    hover:shadow-2xl
+                  "><article
+                  key={scheme.id}
+                  
                 >
 
                   {/* Card top */}
@@ -711,19 +657,19 @@ export default function SchemesPage() {
                         text-green-600
                       "
                     >
-                      {scheme.icon}
+                      <Icon3 size={20}/>
                     </div>
 
 
                     <span
                       className="
                         rounded-full
-                        bg-green-50
+                        bg-green-700
                         px-2.5
                         py-1
                         text-[9px]
                         font-medium
-                        text-green-600
+                        text-white
                       "
                     >
                       {scheme.state}
@@ -739,9 +685,8 @@ export default function SchemesPage() {
                       mt-5
                       text-sm
                       font-bold
-                      text-slate-800
+                      text-black
                       transition
-                      group-hover:text-green-600
                     "
                   >
                     {scheme.name}
@@ -755,7 +700,7 @@ export default function SchemesPage() {
                       mt-1
                       text-[10px]
                       font-medium
-                      text-green-600
+                      text-black
                     "
                   >
                     {scheme.category}
@@ -770,34 +715,11 @@ export default function SchemesPage() {
                       line-clamp-2
                       text-xs
                       leading-5
-                      text-slate-400
+                      text-black
                     "
                   >
                     {scheme.description}
                   </p>
-
-
-                  {/* Benefit */}
-
-                  <div
-                    className="
-                      mt-4
-                      rounded-lg
-                      bg-slate-50
-                      px-3
-                      py-2.5
-                    "
-                  >
-
-                    <p className="text-[9px] text-slate-400">
-                      Main Benefit
-                    </p>
-
-                    <p className="mt-0.5 text-xs font-semibold text-slate-700">
-                      {scheme.benefit}
-                    </p>
-
-                  </div>
 
 
                   {/* Button */}
@@ -814,16 +736,16 @@ export default function SchemesPage() {
                         rounded-lg
                         border
                         border-slate-200
-                        bg-white
+                        bg-green-500
                         px-4
                         py-2.5
                         text-xs
                         font-semibold
-                        text-slate-600
+                        text-black
                         transition
                         group-hover:border-green-200
-                        group-hover:bg-green-50
-                        group-hover:text-green-600
+                        group-hover:bg-green-600
+                        
                       "
                     >
                       View Details
@@ -833,10 +755,9 @@ export default function SchemesPage() {
                     </button>
 
                   </div>
+                </article></Link>)
 
-                </article>
-
-              ))}
+            })}
 
             </div>
 
@@ -875,17 +796,25 @@ export default function SchemesPage() {
 
 
               <h3 className="mt-4 text-sm font-semibold">
-                No schemes found
+                {search_action?
+                
+                <div className="flex justify-center gap-3">
+                  <div className="animate-ping text-green-500"><FaMagnifyingGlass size={15}/></div>
+                  <div className="font-bold text-green-900 animate-bounce">
+                    searching
+                  </div>
+                </div>
+                
+                :"No schemes found"}
               </h3>
 
 
               <p className="mx-auto mt-2 max-w-sm text-xs leading-5 text-slate-400">
-                Try changing your search or removing one of the
-                filters to find more schemes.
+                {search_action ? "" :"Try changing your search or removing one of the filters to find more schemes"}
               </p>
 
 
-              <button
+              {/* <button
                 onClick={clearFilters}
                 className="
                   mt-5
@@ -901,7 +830,7 @@ export default function SchemesPage() {
                 "
               >
                 Clear Filters
-              </button>
+              </button> */}
 
             </div>
 

@@ -13,6 +13,8 @@ import {
   FaCircleCheck
 } from "react-icons/fa6";
 
+import Link from "next/link";
+
 import { MdHealthAndSafety } from "react-icons/md";
 
 import { useSearchParams } from "next/navigation";
@@ -132,27 +134,34 @@ export default function SchemeCategoriesSearch() {
 
                 {schemes.map((scheme) => (
 
-                    <div
-                        key={scheme._id}
-                        className="
-                            rounded-xl
-                            border
-                            border-slate-200
-                            bg-green-300
-                            p-6
-                            shadow-xl
-                        "
-                    >
+                    <Link href={`/details/${scheme.slug}`}>
+                        <div
+                            key={scheme._id}
+                            className="
+                                rounded-xl
+                                border
+                                border-slate-200
+                                bg-green-300
+                                p-6
+                                shadow-xl
+                                hover:-translate-y-0.5
+                                hover:bg-green-400
+                                hover:border-black
+                                hover:shadow-2xl
+                                transition-all
+                            "
+                        >
 
-                        <h2 className="text-xl font-semibold">
-                            {scheme.name}
-                        </h2>
+                            <h2 className="text-xl font-semibold">
+                                {scheme.name}
+                            </h2>
 
-                        <p className="mt-2 text-black">
-                            {scheme.description}
-                        </p>
+                            <p className="mt-2 text-black">
+                                {scheme.description}
+                            </p>
 
-                    </div>
+                        </div>
+                    </Link>
 
                 ))}
 
