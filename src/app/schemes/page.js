@@ -97,7 +97,7 @@ export default function SchemesPage() {
   const [state_, setState_] = useState("All States");
 
   const [filteredSchemes,setFilteredSchemes] = useState([]);
-  const [filteredSchemesb,setFilteredSchemesb] = useState([]);
+  const [age_,setAge_] = useState("Any Age")
 
   const [search_action,setSearch_action] = useState(false);
 
@@ -142,19 +142,28 @@ export default function SchemesPage() {
 
           console.log(state_);
           console.log(category_);
+          console.log(age_.split(" - ")[1]);
+          
           
           
 
           setFilteredSchemes(data3.message.filter((item)=> ( 
 
-            (state_ !== "All States" && category_ !== "All Categories") ?
-            item.state.includes(state_) && item.category.includes(category_) : item
+            ((state_ === "All States") || item.state.includes(state_)) && ((category_ === "All Categories") || item.category.includes(category_)) && (
+
+              (age_ === "Any Age") || (
+
+                ("eligibility_age_max" in item) && (item.eligibility_age_max >= age_.split(" - ")[1])
+              
+              )
+            
+            )
           
           )))
 
           setSearch_action(false)
         }
-        else{
+        else{ 
           console.log(data3.message);       
         }
 
@@ -510,6 +519,8 @@ export default function SchemesPage() {
 
               <select
                 id="age"
+                value={age_}
+                onChange={(e) => setAge_(e.target.value)}
                 className="
                   w-full
                   rounded-lg
@@ -525,7 +536,7 @@ export default function SchemesPage() {
                   focus:border-green-400
                 "
               >
-                <option>Any age</option>
+                <option>Any Age</option>
                 <option>Below 18</option>
                 <option>18 - 25</option>
                 <option>26 - 40</option>
@@ -676,11 +687,12 @@ export default function SchemesPage() {
                 const Icon3 = getCategoryIcon(scheme.name)
 
               return (
-                <Link href={`/details/${scheme.slug}`} className="
+                <Link href={`/details/${scheme.slug}`} key={scheme.id} className="
                     group
                     flex
                     min-h-64
                     flex-col
+                    justify-betweeen
                     rounded-xl
                     border
                     border-slate-300
@@ -693,10 +705,7 @@ export default function SchemesPage() {
                     hover:border-black
                     hover:bg-green-400
                     hover:shadow-2xl
-                  "><article
-                  key={scheme.id}
-                  
-                >
+                  ">
 
                   {/* Card top */}
 
@@ -812,7 +821,7 @@ export default function SchemesPage() {
                     </button>
 
                   </div>
-                </article></Link>)
+                </Link>)
 
             })}
 
