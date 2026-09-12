@@ -26,34 +26,79 @@ import Link from "next/link";
 
 
 const categories = [
-  "All Categories",
-  "Agriculture",
-  "Education",
-  "Employment",
-  "Health",
-  "Housing",
-  "Business",
-  "Energy",
+    "All Categories",
+    "Agriculture",
+    "Education",
+    "Employment",
+    "Health",
+    "Housing",
+    "Business",
+    "Energy",
+    "Financial Assistance",
+    "Social Welfare",
+    "Women & Child",
+    "Senior Citizens",
+    "Disability",
+    "Skill Development",
+    "Pension",
+    "Insurance",
+    "Food & Nutrition",
+    "Rural Development",
+    "Urban Development",
+    "Infrastructure",
+    "Transport",
+    "Environment",
+    "Water & Sanitation",
+    "Digital & Technology",
+    "MSME",
+    "Tribal Welfare",
+    "Minority Welfare",
+    "SC/ST Welfare",
 ];
 
 
 const states = [
-  "All States",
-  "West Bengal",
-  "Maharashtra",
-  "Delhi",
-  "Uttar Pradesh",
-  "Bihar",
-  "Tamil Nadu",
+    "All States",
+    "Andhra Pradesh",
+    "Arunachal Pradesh",
+    "Assam",
+    "Bihar",
+    "Chhattisgarh",
+    "Goa",
+    "Gujarat",
+    "Haryana",
+    "Himachal Pradesh",
+    "Jharkhand",
+    "Karnataka",
+    "Kerala",
+    "Madhya Pradesh",
+    "Maharashtra",
+    "Manipur",
+    "Meghalaya",
+    "Mizoram",
+    "Nagaland",
+    "Odisha",
+    "Punjab",
+    "Rajasthan",
+    "Sikkim",
+    "Tamil Nadu",
+    "Telangana",
+    "Tripura",
+    "Uttar Pradesh",
+    "Uttarakhand",
+    "West Bengal",
 ];
 
 
 export default function SchemesPage() {
 
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("All Categories");
-  const [state, setState] = useState("All States");
+  const [category_, setCategory_] = useState("All Categories");
+  const [state_, setState_] = useState("All States");
+
   const [filteredSchemes,setFilteredSchemes] = useState([]);
+  const [filteredSchemesb,setFilteredSchemesb] = useState([]);
+
   const [search_action,setSearch_action] = useState(false);
 
   const categoryIcons = [
@@ -94,7 +139,19 @@ export default function SchemesPage() {
         const data3 = await as.json()
 
         if (data3.success){
-          setFilteredSchemes(data3.message)
+
+          console.log(state_);
+          console.log(category_);
+          
+          
+
+          setFilteredSchemes(data3.message.filter((item)=> ( 
+
+            (state_ !== "All States" && category_ !== "All Categories") ?
+            item.state.includes(state_) && item.category.includes(category_) : item
+          
+          )))
+
           setSearch_action(false)
         }
         else{
@@ -369,8 +426,8 @@ export default function SchemesPage() {
 
               <select
                 id="category"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
+                value={category_}
+                onChange={(e) => setCategory_(e.target.value)}
                 className="
                   w-full
                   rounded-lg
@@ -411,8 +468,8 @@ export default function SchemesPage() {
 
               <select
                 id="state"
-                value={state}
-                onChange={(e) => setState(e.target.value)}
+                value={state_}
+                onChange={(e) => setState_(e.target.value)}
                 className="
                   w-full
                   rounded-lg
