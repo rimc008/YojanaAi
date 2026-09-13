@@ -593,7 +593,7 @@ export default function SchemesPage() {
                 "
               >
                 <option>Any income</option>
-                <option>Up to ₹1 lakh</option>
+                <option> Up to ₹1 lakh</option>
                 <option>₹1.1 - ₹2.5 lakh</option>
                 <option>₹2.51 - ₹5 lakh</option>
                 <option>₹5.1 - ₹10 lakh</option>
