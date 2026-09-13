@@ -101,6 +101,8 @@ export default function SchemesPage() {
 
   const [search_action,setSearch_action] = useState(false);
 
+  const [income_,setIncome_] = useState("Any income") 
+
   const categoryIcons = [
           { pattern: /agriculture|farmer/i, icon: FaSeedling },
           { pattern: /education|scholarship|student/i, icon: FaGraduationCap },
@@ -149,17 +151,30 @@ export default function SchemesPage() {
 
           setFilteredSchemes(data3.message.filter((item)=> ( 
 
-            ((state_ === "All States") || item.state.includes(state_)) && ((category_ === "All Categories") || item.category.includes(category_)) && (
+            ((state_ === "All States") || item.state.includes(state_)) 
+            && 
+            ((category_ === "All Categories") || item.category.includes(category_)) 
+            && 
+            (
 
               (age_ === "Any Age") || (
 
-                ("eligibility_age_max" in item) && (item.eligibility_age_max >= age_.split(" - ")[1])
+                (!("eligibility_age_max" in item)) || (item.eligibility_age_max >= age_.split(" - ")[1])
+                &&
+                (!("eligibility_age_min" in item)) || (item.eligibility_age_min <= age_.split(" - ")[0])
               
-              )
+              ) 
             
             )
+            &&
+            ((income_ === "Any income") || (
+
+              (("eligibility_income_max" in item) && (item.eligibility_income_max >= (income_.match(/\d+(?:\.\d+)?/g).at(-1)*100000)))
+          
           
           )))
+
+        ))
 
           setSearch_action(false)
         }
@@ -560,6 +575,8 @@ export default function SchemesPage() {
 
               <select
                 id="income"
+                value = {income_}
+                onChange={(e) => setIncome_(e.target.value)}
                 className="
                   w-full
                   rounded-lg
@@ -576,11 +593,11 @@ export default function SchemesPage() {
                 "
               >
                 <option>Any income</option>
-                <option>Below ₹1 lakh</option>
-                <option>₹1 - ₹2.5 lakh</option>
-                <option>₹2.5 - ₹5 lakh</option>
-                <option>₹5 - ₹10 lakh</option>
-                <option>Above ₹10 lakh</option>
+                <option>Up to ₹1 lakh</option>
+                <option>₹1.1 - ₹2.5 lakh</option>
+                <option>₹2.51 - ₹5 lakh</option>
+                <option>₹5.1 - ₹10 lakh</option>
+                <option>₹10 lakh+</option>
               </select>
 
             </div>
