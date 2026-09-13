@@ -34,7 +34,7 @@ export default function layout({children}) {
 
               <Link href="/schemes" className={pathname === "/schemes" ? "px-2 bg-green-600 text-white rounded-md" : "hover:bg-green-600 hover:text-white hover:px-2 hover:rounded-md transition-all"}><p className="cursor-pointer">Schemes</p></Link>
 
-              <Link href="/ligibility" className={pathname === "/ligibility" ? "px-2 bg-green-600 text-white rounded-md" : "hover:bg-green-600 hover:text-white hover:px-2 hover:rounded-md transition-all"}><p className="cursor-pointer">Check Eligibility</p></Link>
+              <Link href="/eligibility" className={pathname === "/eligibility" ? "px-2 bg-green-600 text-white rounded-md" : "hover:bg-green-600 hover:text-white hover:px-2 hover:rounded-md transition-all"}><p className="cursor-pointer">Check Eligibility</p></Link>
               
               <p className="cursor-pointer hover:bg-green-600 hover:text-white hover:px-2 hover:rounded-md transition-all">Ai recommendation</p>
 
@@ -56,7 +56,7 @@ export default function layout({children}) {
 
               <Link href="/schemes"><p className="cursor-pointer hover:bg-green-600 border border-b-gray-300 border-green-100 hover:text-white pl-1 hover:px-2 hover:pb-0.5 transition-all">Schemes</p></Link>
 
-              <Link href="/ligibility"><p className="cursor-pointer hover:bg-green-600 border border-b-gray-300 border-green-100 hover:text-white pl-1 hover:px-2 hover:pb-0.5 transition-all">Check Eligibility</p></Link>
+              <Link href="/eligibility"><p className="cursor-pointer hover:bg-green-600 border border-b-gray-300 border-green-100 hover:text-white pl-1 hover:px-2 hover:pb-0.5 transition-all">Check Eligibility</p></Link>
               <p className="cursor-pointer rounded-l-md hover:bg-green-600 hover:text-white pl-1 hover:px-2 hover:pb-0.5 transition-all">Ai recommendation</p>
 
             </div>

@@ -36,7 +36,6 @@ export default function EligibilityPage() {
 
   const totalSteps = 4;
 
-
   // =====================================================
   // UPDATE FORM DATA
   // =====================================================
@@ -522,7 +521,7 @@ export default function EligibilityPage() {
                           transition
                           ${
                             formData.gender === item
-                              ? "border-green-400 bg-green-50 text-green-600"
+                              ? "border-green-400 bg-green-400 text-white"
                               : "border-slate-200 bg-white text-slate-500 hover:border-green-200"
                           }
                         `}
@@ -726,7 +725,7 @@ export default function EligibilityPage() {
                         transition
                         ${
                           formData.occupation === item.name
-                            ? "border-green-400 bg-green-50"
+                            ? "border-green-400 bg-green-200"
                             : "border-slate-200 bg-white hover:border-green-200 hover:bg-green-50/30"
                         }
                       `}
@@ -892,8 +891,8 @@ export default function EligibilityPage() {
                         transition
                         ${
                           formData.income === item
-                            ? "border-green-400 bg-green-50 text-green-600"
-                            : "border-slate-200 bg-white text-slate-600 hover:border-green-200 hover:bg-green-50/30"
+                            ? "border-green-400 bg-green-400 text-white"
+                            : "border-slate-200 bg-white text-slate-600 hover:border-green-300 hover:bg-green-50/30"
                         }
                       `}
                     >
@@ -1052,7 +1051,7 @@ export default function EligibilityPage() {
                           transition
                           ${
                             selected
-                              ? "border-green-400 bg-green-50"
+                              ? "border-green-400 bg-green-400"
                               : "border-slate-200 bg-white hover:border-green-200"
                           }
                         `}
@@ -1086,7 +1085,7 @@ export default function EligibilityPage() {
                             font-semibold
                             ${
                               selected
-                                ? "text-green-600"
+                                ? "text-white"
                                 : "text-slate-600"
                             }
                           `}
