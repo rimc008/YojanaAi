@@ -149,8 +149,12 @@ export default function SchemesPage() {
           
           
 
-          setFilteredSchemes(data3.message.filter((item)=> ( 
+          setFilteredSchemes(data3.message.filter((item)=> { 
 
+            console.log(item.eligibility_age_max,Object.hasOwn(item, "eligibility_age_max"))
+             
+
+            return (
             ((state_ === "All States") || item.state.includes(state_)) 
             && 
             ((category_ === "All Categories") || item.category.includes(category_)) 
@@ -159,9 +163,9 @@ export default function SchemesPage() {
 
               (age_ === "Any Age") || (
 
-                (!("eligibility_age_max" in item)) || (item.eligibility_age_max >= age_.split(" - ")[1])
+                ((!("eligibility_age_max" in item)) || (item.eligibility_age_max >= Number(age_.split(" - ")[1])))
                 &&
-                (!("eligibility_age_min" in item)) || (item.eligibility_age_min <= age_.split(" - ")[0])
+                ((!("eligibility_age_min" in item)) || (item.eligibility_age_min <= Number(age_.split(" - ")[0])))
               
               ) 
             
@@ -169,10 +173,10 @@ export default function SchemesPage() {
             &&
             ((income_ === "Any income") || (
 
-              (("eligibility_income_max" in item) && (item.eligibility_income_max >= (income_.match(/\d+(?:\.\d+)?/g).at(-1)*100000)))
+              (!("eligibility_income_max" in item) || (item.eligibility_income_max >= (income_.match(/\d+(?:\.\d+)?/g).at(-1)*100000)))
+            )
           
-          
-          )))
+          ))}
 
         ))
 
