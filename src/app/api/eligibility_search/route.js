@@ -33,28 +33,37 @@ export async function POST(request){
         
         const needsegex = needs_.join("|")
 
-        const schemes = await Scheme.find({state:state_,$and:[{$or:[
+        console.log(needsegex);
+        
+
+        const schemes = await Scheme.collection.find({state:state_,$and:[{$or:[
 
             {eligibility_gender:{$eq:"all"}},
             {eligibility_gender:{$eq:gender_}}
 
         ]},{$or:[
 
-            {name:{$regex : needsegex,$options:"i"}},
-            {description:{$regex : needsegex,$options:"i"}}
+            {name:{$regex:needsegex,$options:"i"}},
+            {description:{$regex:needsegex,$options:"i"}},
+            {category: { $regex: needsegex, $options: "i"}},
+            {benefits: { $regex: needsegex, $options: "i"}},
+            {department: { $regex: needsegex, $options: "i"}}
+
 
         ]},{$and:[
             
             {$or:[
             {eligibility_age_max:{$exists:false}},
+            { eligibility_age_max: NaN},
             {eligibility_age_max:{$gte:age_}}]},
 
             {$or:[
             {eligibility_age_min:{$exists:false}},
+            { eligibility_age_min: NaN },
             {eligibility_age_min:{$lte:age_}}]}
 
     ]}
-]})
+]}).toArray()
 
     if(schemes.length===0){
         return Response.json({"success":false,"message":"Not findable"})
