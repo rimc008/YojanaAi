@@ -725,6 +725,41 @@ export default function SchemeDetails() {
                                     }
                                 />
 
+                                <EligibilityCard
+                                    icon={<FaGlobe />}
+                                    label="Age limit"
+                                    value={
+                                        schemedetails.length !== 0
+                                            ? (
+                                                
+                                                (("eligibility_age_max" in schemedetails[0]) && ("eligibility_age_min" in schemedetails[0]))
+
+                                                ? 
+                                                `${schemedetails[0].eligibility_age_min} to ${schemedetails[0].eligibility_age_max}`
+                                                
+                                                :(
+
+                                                    (("eligibility_age_max" in schemedetails[0]) && !("eligibility_age_min" in schemedetails[0])) 
+
+                                                    ? 
+                                                    `< ${schemedetails[0].eligibility_age_max}`
+
+                                                    :(
+                                                        (!("eligibility_age_max" in schemedetails[0]) && ("eligibility_age_min" in schemedetails[0]))
+                                                        
+                                                        ?`> ${schemedetails[0].eligibility_age_min}`
+                                                        
+                                                        :"not defined"
+                                                    )
+                                                )
+                                            
+                                            )
+                                            : ""
+                                    }
+                                />
+
+
+
                             </div>
 
 
