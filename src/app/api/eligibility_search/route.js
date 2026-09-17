@@ -10,7 +10,7 @@ export async function POST(request){
 
         const age_ =  Number(formData.get("age")) // it gives string so converting it to Number is must so that it can be compared
         const gender_ = formData.get("gender")
-        // const income_ =  Number(formData.get("income")) //it gives string so converting it to Number is must so that it can be compared
+        const income_ =  Number(formData.get("income")) //it gives string so converting it to Number is must so that it can be compared
         const needs_ = formData.getAll("needs")
         const state_ = formData.get("state")
 
@@ -49,6 +49,12 @@ export async function POST(request){
             {benefits: { $regex: needsegex, $options: "i"}},
             {department: { $regex: needsegex, $options: "i"}}
 
+
+        ]},{$or: [
+
+            { eligibility_income_max: { $exists: false } },
+            { eligibility_income_max: NaN },
+            { eligibility_income_max: { $gte: income_ } }
 
         ]},{$and:[
             
