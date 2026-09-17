@@ -1591,10 +1591,9 @@ function EligibilityCard({
                         items-center 
                         justify-center 
                         rounded-lg 
-                        bg-slate-100 
                         text-slate-500 
                         transition 
-                        group-hover:bg-green-100 
+                        bg-green-100 
                         group-hover:text-green-700
                     "
                 >

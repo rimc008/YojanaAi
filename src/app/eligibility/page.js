@@ -877,14 +877,14 @@ const needs = [
               </button>
             </div>
 
-            {/* RESULT CARDS */}
+            {/* A CARDS */}
 
             <div className="grid md:grid-cols-2 gap-6">
 
               {a.map((scheme, index) => (
                 <div
                   key={scheme._id || scheme.slug || index}
-                  className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition shadow-md hover:shadow-lg hover:border-black hover:-translate-y-0.5 hover:bg-green-300 w-full min-w-0 max-w-full overflow-hidden"
+                  className="rounded-2xl border border-slate-200 flex flex-col justify-evenly bg-white p-6 shadow-sm transition shadow-md hover:shadow-lg hover:border-black hover:-translate-y-0.5 hover:bg-green-300 w-full min-w-0 max-w-full overflow-hidden"
                 >
 
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
