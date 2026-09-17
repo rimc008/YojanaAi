@@ -879,7 +879,7 @@ const needs = [
 
             {/* RESULT CARDS */}
 
-            <div className="grid gap-5">
+            <div className="grid md:grid-cols-2 gap-5">
 
               {a.map((scheme, index) => (
                 <div
@@ -902,7 +902,7 @@ const needs = [
                     </div>
 
                     {scheme.category && (
-                      <span className="w-fit rounded-full bg-green-50 px-3 py-1 text-xs font-semibold text-green-800">
+                      <span className="w-fit rounded-lg bg-green-50 px-3 py-1 text-xs font-semibold text-green-800">
                         {scheme.category}
                       </span>
                     )}
