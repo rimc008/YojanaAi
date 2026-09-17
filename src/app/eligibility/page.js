@@ -16,6 +16,16 @@ import {
   FaBuilding,
   FaMagnifyingGlass,
   FaRotateRight,
+  FaHandHoldingDollar,
+  FaPersonCane,
+  FaShieldHalved,
+  FaUtensils,
+  FaChild,
+  FaWheelchair,
+  FaBolt,
+  FaFaucetDrip,
+  FaBus,
+  FaLaptop,
 } from "react-icons/fa6";
 
 const states = [
@@ -231,33 +241,80 @@ export default function EligibilityPage() {
   // =========================================================
   // NEEDS
   // =========================================================
-
-  const needs = [
-    {
-      name: "Agriculture",
-      icon: <FaSeedling />,
-    },
-    {
-      name: "Education",
-      icon: <FaGraduationCap />,
-    },
-    {
-      name: "Employment",
-      icon: <FaBriefcase />,
-    },
-    {
-      name: "Health",
-      icon: <FaHeartPulse />,
-    },
-    {
-      name: "Housing",
-      icon: <FaHouse />,
-    },
-    {
-      name: "Business",
-      icon: <FaBuilding />,
-    },
-  ];
+const needs = [
+  {
+    name: "Agriculture",
+    icon: <FaSeedling />,
+  },
+  {
+    name: "Education",
+    icon: <FaGraduationCap />,
+  },
+  {
+    name: "Employment",
+    icon: <FaBriefcase />,
+  },
+  {
+    name: "Health",
+    icon: <FaHeartPulse />,
+  },
+  {
+    name: "Housing",
+    icon: <FaHouse />,
+  },
+  {
+    name: "Business",
+    icon: <FaBuilding />,
+  },
+  {
+    name: "Financial Help",
+    icon: <FaHandHoldingDollar />,
+  },
+  {
+    name: "Pension",
+    icon: <FaPersonCane />,
+  },
+  {
+    name: "Insurance",
+    icon: <FaShieldHalved />,
+  },
+  {
+    name: "Food & Nutrition",
+    icon: <FaUtensils />,
+  },
+  {
+    name: "Skill Development",
+    icon: <FaGraduationCap />,
+  },
+  {
+    name: "Women & Child",
+    icon: <FaChild />,
+  },
+  {
+    name: "Disability Support",
+    icon: <FaWheelchair />,
+  },
+  {
+    name: "Senior Citizens",
+    icon: <FaPersonCane />,
+  },
+  {
+    name: "Energy",
+    icon: <FaBolt />,
+  },
+  {
+    name: "Water & Sanitation",
+    icon: <FaFaucetDrip />,
+  },
+  {
+    name: "Transport",
+    icon: <FaBus />,
+  },
+  {
+    name: "Digital Services",
+    icon: <FaLaptop />,
+  },
+];
 
   // =========================================================
   // STEP TITLE
