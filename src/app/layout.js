@@ -42,7 +42,7 @@ export default function layout({children}) {
           </div>
 
           <div className="flex md:justify-center justify-end gap-[7%] md:gap-[10%]">
-            <p className="cursor-pointer"><AiOutlineSearch size={25}/></p>
+            <Link href="/schemes" ><p className="cursor-pointer"><AiOutlineSearch size={25}/></p></Link>
             <p className="border rounded-md text-white px-2 pb-0.5 cursor-pointer hover:bg-green-700 transition-all bg-green-600 ">Sign Up</p>
           </div>
 

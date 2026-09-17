@@ -15,9 +15,12 @@ import {
   FaCircleCheck,
   FaRobot,
 } from "react-icons/fa6";
+
 import Link from "next/link";
 
 import { MdHealthAndSafety } from "react-icons/md";
+
+
 
 import { useEffect, useState } from "react";
 
@@ -199,7 +202,7 @@ export default function Home() {
                 sm:leading-7
               "
             >
-              Discover, check eligibility, and apply for 2000+ central
+              Discover, check eligibility, and apply for <span className="font-bold">4000+</span> central
               and state government schemes — all in one place.
             </p>
 
@@ -216,7 +219,7 @@ export default function Home() {
               "
             >
 
-              <button
+              <Link href="/eligibility"
                 className="
                   inline-flex
                   items-center
@@ -240,10 +243,10 @@ export default function Home() {
                 Check Your Eligibility
 
                 <FaArrowRight size={12} />
-              </button>
+              </Link>
 
 
-              <button
+              <Link href="/schemes"
                 className="
                   inline-flex
                   items-center
@@ -252,22 +255,22 @@ export default function Home() {
                   rounded-lg
                   border
                   border-slate-200
-                  bg-white
+                  bg-green-600
                   px-5
                   py-3
                   text-sm
                   font-medium
-                  text-slate-700
+                  text-white
                   transition
                   duration-200
                   hover:border-green-200
-                  hover:bg-green-50
+                  hover:bg-green-700
                 "
               >
                 <FaMagnifyingGlass size={13} />
 
                 Browse Schemes
-              </button>
+              </Link>
 
             </div>
 
