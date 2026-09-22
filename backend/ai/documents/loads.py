@@ -11,6 +11,6 @@ collection = db["schemes"]
 def get_schemes():
     return list(collection.find({}))
 
-a = get_schemes()
+# a = get_schemes()
 
-print(a[1])
+# print(a[1])
