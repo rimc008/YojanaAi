@@ -21,6 +21,8 @@ collection = db["schemes"] # collection mane
 
 data = df.to_dict(orient="records")
 
+## collection.insert_many(data)
+
 b = []
 c = []
 
