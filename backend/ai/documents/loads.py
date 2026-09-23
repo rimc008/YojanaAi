@@ -8,6 +8,7 @@ client = MongoClient(os.getenv("MONGODB_URI"))
 db = client["scheme_dataset"]
 collection = db["schemes"]
 
+# 1
 def get_schemes():
     return list(collection.find({}))
 

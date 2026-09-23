@@ -1,8 +1,11 @@
-from loads import get_schemes
+from documents.loads import get_schemes
 from langchain_core.documents import Document
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+# from pprint import pprint
 
 schemes = get_schemes()
 
+# 2
 def scheme_document(schemes):
 
     document =[]
@@ -43,7 +46,20 @@ def scheme_document(schemes):
 
 b = scheme_document(schemes)
 
-print(len(b))
+# print(len(b))
 
-print(b[0:2])
+# print(b[0:2])
+
+split_ = RecursiveCharacterTextSplitter(
+    chunk_size=800,
+    chunk_overlap=100
+)
+
+chunks = split_.split_documents(b)
+
+# pprint(type(chunks))
+# pprint(chunks[100:110])
+
+# pprint(len(chunks))
+# pprint(chunks[1])
 
