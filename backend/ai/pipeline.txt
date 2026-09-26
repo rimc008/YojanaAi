@@ -1,0 +1,8 @@
+# load -> embbed -> chunk -> upload at vdb ->  user's question -> embbed it -> compare -> MMR Retriever -> format_docs -> promt -> llm  
+                                                                                             |                                      |         
+                                                                                             v                                      v       
+                                                                                 a =invoke(user's question) ---------------> rag_chain.invoke(a)
+                                                                                             |                                      |
+                                                                                             v                                      v
+                                                                                    get_unique_schemes(a)                   invoke(user's question)
+

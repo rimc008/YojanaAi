@@ -54,6 +54,5 @@ def store_chunks(collection,client,embeddings):
 
         )
 
-store_chunks(collection_,client_,embeddings)
+    return vectorstore
 
-print("pushed at qdrant")
