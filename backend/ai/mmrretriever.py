@@ -1,4 +1,4 @@
-from embedding_and_vectordb import store_chunks,collection_,client_,embeddings
+from embedding_and_vectordb import collection_,client_,embeddings
 
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import ChatPromptTemplate
@@ -23,7 +23,7 @@ vectorstore = QdrantVectorStore(
 # 7
 # MMR Retriever
 
-retriever = store_chunks(collection_,client_,embeddings).as_retriever(
+retriever = vectorstore.as_retriever(
     search_type="mmr",
     search_kwargs={
         "k": 10,
@@ -61,7 +61,7 @@ def format_docs(documents):
 
         """)
 
-    return "/n/n".join(formatted_docs)
+    return "\n\n".join(formatted_docs)
 
 
 
@@ -122,8 +122,6 @@ llm = ChatGoogleGenerativeAI(
 
     )
 
-from langchain_core.prompts import MessagesPlaceholder
-
 
 # Contextual question prompt
 
@@ -156,4 +154,4 @@ contextual_prompt = ChatPromptTemplate.from_messages([
 
 # Conversation history
 
-chat_history = []
+# chat_history = []
