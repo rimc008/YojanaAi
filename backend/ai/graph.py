@@ -17,7 +17,7 @@ class State(TypedDict):
 def node1(state:State) -> State:
 
     question_ = state["question"]
-    chat_history_= state["chat_history"]
+    chat_history_= state["chat_history"][-4:]
 
     promt = contextual_prompt.invoke({"question": question_,"chat_history": chat_history_})
     standalone_question_ = llm.invoke(promt).content

@@ -1,6 +1,6 @@
 from embedding_and_vectordb import collection_,client_,embeddings
 
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_qdrant import QdrantVectorStore
 from langchain_core.prompts import MessagesPlaceholder
@@ -98,6 +98,14 @@ prompt = ChatPromptTemplate.from_messages([
 
         6. Keep the answer clear and practical.
 
+        7. Do not give any kind of table at any point.
+
+        8. Only give text/string for the "answer" field.
+
+        9. The answer must be to the point and brief.
+
+        10. The answer field must be finished within 4 lines max.
+
         Retrieved scheme information:
 
         {context}
@@ -114,13 +122,11 @@ prompt = ChatPromptTemplate.from_messages([
 # 10
 # llm
 
-llm = ChatGoogleGenerativeAI(
-
-         model="gemini-2.5-flash",
-         temperature=0,
-         google_api_key=os.getenv("GOOGLE_API_KEY")
-
-    )
+llm = ChatGroq(
+    model="openai/gpt-oss-120b",
+    temperature=0,
+    api_key=os.getenv("GROQ_API_KEY")
+)
 
 
 # Contextual question prompt
@@ -137,7 +143,7 @@ contextual_prompt = ChatPromptTemplate.from_messages([
 
         Do not answer the question.
 
-        If the question is already clear and independent,
+        If the question is already independent and not connected with the questions asked before,
         return it unchanged.
         """
 
