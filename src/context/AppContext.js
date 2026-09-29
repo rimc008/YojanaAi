@@ -6,9 +6,11 @@ export const AppContext = createContext();
 
 export default function AppContextProvider({children}){
 
-    const [a,setA] = useState("")
+    const [client_message,setClient_message] = useState("")
+    const [aiclient,setAiclient] = useState(false)
+    
     return (
-        <AppContext.Provider value={{ a , setA }}>
+        <AppContext.Provider value={{ client_message,setClient_message,aiclient,setAiclient }}>
             {children}
         </AppContext.Provider>
     )

@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-
 import {
     FaWandSparkles,
     FaArrowUp,
@@ -13,15 +11,27 @@ import {
     FaArrowUpRightFromSquare,
 } from "react-icons/fa6";
 
+import { useContext, useEffect, useState } from "react";
+import {AppContext} from "../../context/AppContext.js"
+
 import ReactMarkdown from "react-markdown";
 
 import Link from "next/link";
 
 export default function AIRecommendation() {
+
+    const {client_message,aiclient} = useContext(AppContext)
+
     const [message, setMessage] = useState("");
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
     const [chat_history, setChat_history] = useState([]);
+
+    useEffect(()=>{
+
+        setMessage(client_message)
+        
+    },[aiclient])
 
     const examples = [
         {
@@ -321,7 +331,7 @@ export default function AIRecommendation() {
                                                         max-w-[90%]
                                                         rounded-2xl
                                                         border
-                                                        border-slate-100
+                                                        border-green-400
                                                         bg-white
                                                         px-5
                                                         py-5
@@ -371,11 +381,11 @@ export default function AIRecommendation() {
                                                                                     rounded-xl
                                                                                     border
                                                                                     border-green-100
-                                                                                    bg-green-50/40
+                                                                                    bg-green-200
                                                                                     p-4
                                                                                     transition
                                                                                     hover:border-green-200
-                                                                                    hover:bg-green-200
+                                                                                    hover:bg-green-300
                                                                                 "
                                                                             >
 
@@ -394,7 +404,7 @@ export default function AIRecommendation() {
                                                                                             className="
                                                                                                 text-sm
                                                                                                 font-semibold
-                                                                                                text-slate-900
+                                                                                                text-black
                                                                                             "
                                                                                         >
                                                                                             {scheme.name}
@@ -408,7 +418,7 @@ export default function AIRecommendation() {
                                                                                                     mt-1
                                                                                                     text-sm
                                                                                                     leading-6
-                                                                                                    text-slate-600
+                                                                                                    text-black
                                                                                                 "
                                                                                             >
                                                                                                 {scheme.description}
@@ -475,7 +485,7 @@ export default function AIRecommendation() {
                                                                                                 px-2.5
                                                                                                 py-1
                                                                                                 text-xs
-                                                                                                text-slate-500
+                                                                                                text-black
                                                                                             "
                                                                                         >
                                                                                             {scheme.state}
@@ -493,7 +503,7 @@ export default function AIRecommendation() {
                                                                                                 px-2.5
                                                                                                 py-1
                                                                                                 text-xs
-                                                                                                text-slate-500
+                                                                                                text-black
                                                                                             "
                                                                                         >
                                                                                             {scheme.category}

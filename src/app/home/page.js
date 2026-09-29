@@ -20,9 +20,9 @@ import Link from "next/link";
 
 import { MdHealthAndSafety } from "react-icons/md";
 
+import { useContext, useEffect, useState } from "react";
+import {AppContext} from "../../context/AppContext.js"
 
-
-import { useEffect, useState } from "react";
 
 const categoryIcons = [
     { pattern: /agriculture|farmer/i, icon: FaSeedling },
@@ -48,6 +48,8 @@ function getCategoryIcon(categoryName) {
 
 
 export default function Home() {
+
+  const {client_message,setClient_message,aiclient,setAiclient} = useContext(AppContext)
 
   const [categories,setCategories] = useState([])
   const [viewall,setViewall] = useState(false)
@@ -80,6 +82,7 @@ export default function Home() {
         
       }
     }
+
 
     const featuredSchemes_function = async() => {
       try {
@@ -380,7 +383,7 @@ export default function Home() {
                   </h3>
 
                   <p className="mt-1 text-xs leading-5 text-slate-400">
-                    Tell us about yourself and we'll find relevant schemes.
+                    Tell us the situation and we'll find relevant schemes.
                   </p>
 
                 </div>
@@ -398,13 +401,14 @@ export default function Home() {
                       px-3
                       py-1.5
                       text-[10px]
-                      text-slate-500
+                      text-green-500
                       transition
                       hover:border-green-200
                       hover:bg-green-50
                     "
+                    onClick={(e)=>setClient_message(e.target.textContent)}
                   >
-                    What schemes am I eligible for?
+                    Business schemes
                   </button>
 
 
@@ -416,11 +420,13 @@ export default function Home() {
                       px-3
                       py-1.5
                       text-[10px]
-                      text-slate-500
+                      text-green-500
                       transition
                       hover:border-green-200
                       hover:bg-green-50
                     "
+
+                    onClick={(e)=>setClient_message(e.target.textContent)}
                   >
                     I'm a farmer
                   </button>
@@ -434,13 +440,36 @@ export default function Home() {
                       px-3
                       py-1.5
                       text-[10px]
-                      text-slate-500
+                      text-green-500
                       transition
                       hover:border-green-200
                       hover:bg-green-50
                     "
+                    onClick={(e)=>{
+                      
+                      setClient_message(e.target.textContent)}}
                   >
                     Scholarships for students
+                  </button>
+
+                  <button
+                    className="
+                      rounded-md
+                      border
+                      border-slate-200
+                      px-3
+                      py-1.5
+                      text-[10px]
+                      text-green-500
+                      transition
+                      hover:border-green-200
+                      hover:bg-green-50
+                    "
+                    onClick={(e)=>{
+                      
+                      setClient_message(e.target.textContent)}}
+                  >
+                    Pradhan mantri schemes
                   </button>
 
                 </div>
@@ -465,6 +494,8 @@ export default function Home() {
                   <input
                     type="text"
                     placeholder="Ask about schemes, eligibility..."
+                    value={client_message}
+                    onChange={(e)=>setClient_message(e.target.value)}
                     className="
                       min-w-0
                       flex-1
@@ -477,7 +508,9 @@ export default function Home() {
                   />
 
 
-                  <button
+                  <Link
+                    
+                    href="/ai_recommendation"
                     className="
                       flex
                       h-8
@@ -491,9 +524,10 @@ export default function Home() {
                       transition
                       hover:bg-green-600
                     "
+                    onClick={() => setAiclient(true)}
                   >
                     <FaArrowRight size={11} />
-                  </button>
+                  </Link>
 
                 </div>
 
