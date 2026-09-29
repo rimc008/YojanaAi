@@ -128,6 +128,7 @@ export default function AIRecommendation() {
                         blur-[120px]
                     "
                 />
+                
 
                 <div
                     className="
