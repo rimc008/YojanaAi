@@ -21,13 +21,14 @@ import {
 } from "react-icons/fa6";
 import { useParams } from "next/navigation";
 import ReactMarkdown from "react-markdown";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 
 
 export default function SchemeDetails() {
 
     const { slug } = useParams();
+    const gopath = useRouter();
 
     const [schemedetails, setSchemedetails] = useState([]);
 
@@ -142,9 +143,8 @@ export default function SchemeDetails() {
                     lg:px-8
                 ">
 
-                    <Link
+                    <button
 
-                        href="/schemes"
                         className="
                             flex 
                             items-center 
@@ -155,13 +155,14 @@ export default function SchemeDetails() {
                             transition 
                             hover:text-green-700
                         "
+                        onClick={() => gopath.back()}
                     >
 
                         <FaArrowLeft className="text-xs" />
 
                         Back to schemes
 
-                    </Link>
+                    </button>
 
 
                     <div
