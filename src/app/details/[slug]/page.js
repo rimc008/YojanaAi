@@ -21,6 +21,8 @@ import {
 } from "react-icons/fa6";
 import { useParams } from "next/navigation";
 import ReactMarkdown from "react-markdown";
+import Link from "next/link";
+
 
 
 export default function SchemeDetails() {
@@ -140,7 +142,9 @@ export default function SchemeDetails() {
                     lg:px-8
                 ">
 
-                    <button
+                    <Link
+
+                        href="/schemes"
                         className="
                             flex 
                             items-center 
@@ -157,7 +161,7 @@ export default function SchemeDetails() {
 
                         Back to schemes
 
-                    </button>
+                    </Link>
 
 
                     <div

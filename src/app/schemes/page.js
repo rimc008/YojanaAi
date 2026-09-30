@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-
 import {
   FaMagnifyingGlass,
   FaArrowRight,
@@ -21,6 +19,9 @@ import {
 } from "react-icons/fa6";
 
 import { MdHealthAndSafety } from "react-icons/md";
+
+import { useContext, useState } from "react";
+import {AppContext} from "../../context/AppContext.js"
 
 import Link from "next/link";
 
@@ -92,11 +93,12 @@ const states = [
 
 export default function SchemesPage() {
 
+  const {filteredSchemes,setFilteredSchemes} = useContext(AppContext)
+
   const [search, setSearch] = useState("");
   const [category_, setCategory_] = useState("All Categories");
   const [state_, setState_] = useState("All States");
 
-  const [filteredSchemes,setFilteredSchemes] = useState([]);
   const [age_,setAge_] = useState("Any Age")
 
   const [search_action,setSearch_action] = useState(false);
@@ -140,14 +142,7 @@ export default function SchemesPage() {
 
         const data3 = await as.json()
 
-        if (data3.success){
-
-          console.log(state_);
-          console.log(category_);
-          console.log(age_.split(" - ")[1]);
-          
-          
-          
+        if (data3.success){          
 
           setFilteredSchemes(data3.message.filter((item)=> { 
 

@@ -20,12 +20,9 @@ import Link from "next/link";
 
 export default function AIRecommendation() {
 
-    const {client_message,aiclient} = useContext(AppContext)
+    const {client_message,aiclient,message,setMessage,messages,setMessages,chat_history,setChat_history } = useContext(AppContext)
 
-    const [message, setMessage] = useState("");
-    const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [chat_history, setChat_history] = useState([]);
 
     useEffect(()=>{
 

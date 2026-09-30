@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import {
   FaArrowLeft,
   FaArrowRight,
@@ -27,6 +26,12 @@ import {
   FaBus,
   FaLaptop,
 } from "react-icons/fa6";
+
+import { useContext, useState } from "react";
+import {AppContext} from "../../context/AppContext.js"
+import ReactMarkdown from "react-markdown";
+import Link from "next/link.js";
+
 
 const states = [
     "All States",
@@ -61,6 +66,9 @@ const states = [
 ];
 
 export default function EligibilityPage() {
+
+  const {a,setA} = useContext(AppContext)
+
   const [step, setStep] = useState(1);
 
   const [formData, setFormData] = useState({
@@ -72,7 +80,6 @@ export default function EligibilityPage() {
   });
 
   const [loading, setLoading] = useState(false);
-  const [a, setA] = useState([]);
   const [error, setError] = useState("");
 
   const totalSteps = 4;
@@ -201,12 +208,6 @@ export default function EligibilityPage() {
         formdata.append("needs", need);
       });
 
-      // Check what is being sent
-      console.log("Age:", formdata.get("age"));
-      console.log("Gender:", formdata.get("gender"));
-      console.log("State:", formdata.get("state"));
-      console.log("Income:", formdata.get("income"));
-      console.log("Needs:", formdata.getAll("needs"));
 
       const response = await fetch(
         "http://localhost:3000/api/eligibility_search",
@@ -911,18 +912,28 @@ const needs = [
 
                   {scheme.description && (
                     <p className="mt-4 text-sm leading-6 text-black">
+
+                      <ReactMarkdown>
                       {scheme.description}
+                      </ReactMarkdown>
+
                     </p>
                   )}
 
                   {scheme.benefits && (
                     <div className="mt-5">
                       <h4 className="mb-1 text-sm font-semibold text-black">
+
+                        
                         Benefits
                       </h4>
 
                       <p className="text-sm leading-6 text-black">
+
+                        <ReactMarkdown>
                         {scheme.benefits}
+                        </ReactMarkdown>
+
                       </p>
                     </div>
                   )}
@@ -945,13 +956,13 @@ const needs = [
 
                   {scheme.slug && (
                     <div className="mt-5">
-                      <a
+                      <Link
                         href={`/details/${scheme.slug}`}
                         className="inline-flex items-center gap-2 rounded-xl bg-green-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-green-700"
                       >
                         View Scheme
                         <FaArrowRight size={10} />
-                      </a>
+                      </Link>
                     </div>
                   )}
 
