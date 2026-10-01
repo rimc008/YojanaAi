@@ -998,7 +998,9 @@ export default function SchemesPage() {
             </p>
 
 
-            <button
+            <Link
+
+              href="/eligibility"
               className="
                 mt-5
                 inline-flex
@@ -1021,7 +1023,7 @@ export default function SchemesPage() {
               Check My Eligibility
 
               <FaArrowRight size={10} />
-            </button>
+            </Link>
 
           </div>
 
