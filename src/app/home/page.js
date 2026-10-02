@@ -781,25 +781,26 @@ export default function Home() {
           {/* CATEGORY GRID */}
 
           <div
-            className={`
+            className="
               mt-7
               grid
               grid-cols-1
               gap-3
               sm:grid-cols-2
               md:grid-cols-3
-              lg:grid-cols-4
-              
-              `}
+              lg:grid-cols-4              
+              "
             
           >
 
-            {(viewall ? categories.slice(0,30) : categories.slice(0,11)).map((category) => {
+            {(viewall ? categories.slice(0,30) : categories.slice(0,11)).map((category,index) => {
 
               const Icon = getCategoryIcon(category[0])
 
               return (
-              <Link href={{pathname:"/scheme_categoty_pool",query: { category:category[0], department:category[1] }}} className="
+              <Link href={{pathname:"/scheme_categoty_pool",query: { category:category[0], department:category[1] }}} 
+              key={index}
+              className="
                   group
                   flex
                   items-center
@@ -945,12 +946,14 @@ export default function Home() {
             "
           >
 
-            {(browseall ? featuredSchemes.slice(0,10) : featuredSchemes.slice(0,6)).map((scheme) => {
+            {(browseall ? featuredSchemes.slice(0,10) : featuredSchemes.slice(0,6)).map((scheme,index) => {
 
               const Icon1 = getCategoryIcon(scheme.description)
 
               return (
-              <Link href={`/details/${scheme.slug}`} className="
+              <Link href={`/details/${scheme.slug}`}
+              key={index} 
+              className="
                   group
                   min-h-36
                   rounded-lg

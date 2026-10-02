@@ -538,30 +538,29 @@ export default function SchemeDetails() {
 >
 
 
-    <div className="space-y-7 p-6">
+    <div className="space-y-2 p-6">
+
+        <div className="bg-green-100 p-5">
+
+        <SectionTitle 
+            icon={<FaCircleCheck />}
+            title="Key Benefit"
+            subtitle="Benefits and coverage provided under the scheme"
+        />
+
+        </div>
 
         {
             schemedetails.length !== 0 &&
+            
 
             parseBenefits(
                 schemedetails[0].benefits
             ).map((section, index) => (
 
                 <div key={index}>
-
-                    <div className="bg-green-100 p-5">
-
-                    <SectionTitle 
-                        icon={<FaCircleCheck />}
-                        title="Key Benefit"
-                        subtitle="Benefits and coverage provided under the scheme"
-                    />
-
-                    </div>
                     
-                    {/* Items */}
-
-                    <div className="space-y-2 pt-[5%]">
+                    <div className="space-y-2">
 
                         {
                             section.items.map(
@@ -609,6 +608,7 @@ export default function SchemeDetails() {
                 </div>
 
             ))
+            
 
         }
 
