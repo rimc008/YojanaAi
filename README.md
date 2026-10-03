@@ -1,25 +1,46 @@
-# 🇮🇳 YojanaAI
+# YojanaAI
 
-### AI-Powered Government Scheme Discovery Platform
+> An AI-powered government scheme discovery platform that helps users find and explore Indian government schemes based on their profile, location, income, and needs.
 
-**YojanaAI** is a full-stack AI-powered platform that helps users discover relevant Indian government schemes based on their **age, gender, location, income, and personal needs**.
+## Overview
 
-It combines a modern **Next.js application**, a **Python/FastAPI AI service**, **MongoDB** for structured scheme data, and **Qdrant** for semantic vector retrieval.
+YojanaAI combines a modern **Next.js web application** with a **Python-based AI service** and a **Qdrant vector database**.
+
+The platform provides two complementary discovery flows:
+
+* **Eligibility Search** — filters government schemes using structured user information such as age, gender, state, income, and areas of need.
+* **AI Recommendation** — uses semantic retrieval and an AI pipeline to understand a user's situation and surface relevant government schemes.
+
+The application also provides:
+
+* Scheme browsing
+* Category-based discovery
+* Detailed scheme pages
+* Featured schemes
+* Search and filtering
+* A centralized client-side state management layer
 
 ---
+## Demo video
+### Full website demo video 
+https://github.com/user-attachments/assets/697b2581-2640-477d-8bff-bc8913d780cf
+### Scheme details page demo video
+https://github.com/user-attachments/assets/82f54e28-69b6-4817-be22-498cfeff0b35
 
-## ✨ Features
+## Key Features
 
-### 🔎 Government Scheme Discovery
+### 🔎 Scheme Discovery
+
+Users can:
 
 * Browse government schemes
 * Search and filter schemes
 * Explore schemes by category
 * View featured schemes
-* View detailed scheme information
+* Open detailed scheme pages
 * Access official scheme/application links where available
 
-### ✅ Eligibility-Based Scheme Matching
+### ✅ Eligibility Matching
 
 Users can provide:
 
@@ -29,38 +50,39 @@ Users can provide:
 * Annual income
 * Areas where they need assistance
 
-The application processes these parameters through the Next.js API layer and returns schemes matching the provided eligibility information.
+The application sends these parameters to the **Next.js API layer** and returns matching schemes.
 
-### 🤖 AI-Powered Recommendations
+### 🤖 AI Recommendation
 
-YojanaAI includes a dedicated Python AI service that understands a user's situation and retrieves semantically relevant schemes.
+The AI layer is implemented separately from the Next.js application.
 
-The AI pipeline uses:
+The current architecture uses:
 
-* **Python**
-* **FastAPI**
-* **LangChain**
-* **LangGraph**
-* **Gemini**
-* **Qdrant**
-* **MongoDB**
+* Python
+* FastAPI
+* LangChain
+* LangGraph
+* Gemini-based models/embeddings
+* Qdrant
+* MongoDB
 
-Scheme information is transformed into documents, chunked, embedded, and stored in Qdrant. User queries are then converted into embeddings and used for semantic retrieval.
+Scheme documents are prepared, chunked, embedded, and stored in Qdrant.
 
-### 💬 Client-Side State Management
+User queries are then converted into embeddings and used for semantic retrieval.
 
-The application uses **React Context API** for shared client-side state, including:
+### 💬 Application State
+
+React Context API is used for shared client-side state, including:
 
 * AI/client messages
 * Chat state
 * Filtered schemes
 * Eligibility results
 * Conversation history
-* AI recommendation state
 
 ---
 
-# 🏗️ Architecture
+## Architecture
 
 ```text
                          ┌──────────────────────┐
@@ -70,180 +92,82 @@ The application uses **React Context API** for shared client-side state, includi
                                     ▼
                          ┌──────────────────────┐
                          │      Next.js App     │
-                         │   Frontend + APIs    │
+                         │       Frontend       │
                          └──────────┬───────────┘
                                     │
-                    ┌───────────────┴────────────────┐
-                    │                                │
-                    ▼                                ▼
-          ┌─────────────────────┐          ┌─────────────────────┐
-          │    Next.js APIs     │          │    Python AI API    │
-          │   Route Handlers    │          │       FastAPI       │
-          └──────────┬──────────┘          └──────────┬──────────┘
-                     │                                │
-                     ▼                                ▼
-          ┌─────────────────────┐          ┌─────────────────────┐
-          │      MongoDB        │          │       Qdrant        │
-          │ Structured Scheme   │          │   Vector Database   │
-          │       Data          │          └──────────┬──────────┘
-          └─────────────────────┘                     │
-                                                      ▼
-                                           ┌─────────────────────┐
-                                           │   Gemini / AI Model  │
-                                           │ Embeddings + LLM     │
-                                           └─────────────────────┘
+                 ┌──────────────────┴──────────────────┐
+                 │                                     │
+                 ▼                                     ▼
+       ┌─────────────────────┐              ┌─────────────────────┐
+       │     Next.js API     │              │    Python AI API    │
+       │    Route Handlers   │              │       FastAPI       │
+       └──────────┬──────────┘              └──────────┬──────────┘
+                  │                                    │
+                  ▼                                    ▼
+       ┌─────────────────────┐              ┌─────────────────────┐
+       │      MongoDB        │              │       Qdrant        │
+       │   Scheme Database   │              │   Vector Database   │
+       └─────────────────────┘              └─────────────────────┘
+                                                     │
+                                                     ▼
+                                            ┌─────────────────────┐
+                                            │    Gemini / LLM      │
+                                            │  Embeddings + AI     │
+                                            └─────────────────────┘
 ```
 
 ---
 
-# 🧩 System Components
+## Backend Responsibilities
 
-YojanaAI is divided into three major application layers.
+There are two different backend layers.
 
-## 1. Next.js Application
+### 1. Next.js Backend
 
-The Next.js application is responsible for:
-
-* User interface
-* Routing
-* Scheme browsing
-* Eligibility forms
-* Scheme filtering
-* Scheme details
-* Next.js API routes
-* Client-side state management
-
-Location:
+Located under:
 
 ```text
-src/
+src/app/api/
 ```
 
----
+This layer handles application-specific API operations such as:
 
-## 2. Python AI Service
+* Scheme details
+* Eligibility search
+* Featured schemes
+* Filtering
+* Categories
+* Category search
 
-The Python backend handles AI-specific functionality.
+It communicates with MongoDB.
 
-It is responsible for:
+### 2. Python AI Backend
 
-* Document loading
-* Document chunking
-* Embedding generation
-* Vector storage
-* Semantic retrieval
-* MMR retrieval
-* AI orchestration
-* FastAPI endpoints
-
-Location:
+Located under:
 
 ```text
 backend/ai/
 ```
 
----
+This service is responsible for the AI/retrieval pipeline.
 
-## 3. Data & Vector Layer
+It communicates with:
 
-### MongoDB
-
-MongoDB stores structured scheme information used by the main application.
-
-### Qdrant
-
-Qdrant stores vector embeddings of scheme documents and is used by the AI retrieval pipeline.
+* Qdrant
+* Gemini/model providers
+* Scheme documents
+* The Next.js application when AI functionality is requested
 
 ---
 
-# 🧠 AI Recommendation Pipeline
-
-The AI recommendation flow follows this architecture:
+## Project Structure
 
 ```text
-User Situation / Query
-          │
-          ▼
-     Next.js App
-          │
-          ▼
-     Python API
-       FastAPI
-          │
-          ▼
-      Embedding
-          │
-          ▼
-       Qdrant
-          │
-          ▼
- Semantic / MMR Retrieval
-          │
-          ▼
- Retrieved Scheme Context
-          │
-          ▼
- LangChain / LangGraph
-          │
-          ▼
-       Gemini
-          │
-          ▼
- Recommended Schemes
-          │
-          ▼
-      Next.js UI
-```
-
----
-
-# 📚 Document Indexing Pipeline
-
-Before AI recommendations can be generated, scheme data is prepared for vector retrieval.
-
-```text
-Scheme Dataset
-      │
-      ▼
-Load Scheme Data
-      │
-      ▼
-Create LangChain Documents
-      │
-      ▼
-Chunk Documents
-      │
-      ▼
-Generate Embeddings
-      │
-      ▼
-Store Vectors
-      │
-      ▼
-Qdrant Collection
-```
-
-Relevant files:
-
-```text
-backend/ai/documents/loads.py
-backend/ai/documents/chunk.py
-backend/ai/embedding_and_vectordb.py
-```
-
-The vector database generally needs to be re-indexed when the underlying scheme dataset or embedding configuration changes.
-
----
-
-# 📁 Project Structure
-
-```text
-YojanaAI/
+scheme/
 │
 ├── src/
 │   ├── app/
 │   │   ├── ai_recommendation/
-│   │   │
 │   │   ├── api/
 │   │   │   ├── details_scheme/
 │   │   │   ├── eligibility_search/
@@ -251,7 +175,6 @@ YojanaAI/
 │   │   │   ├── filters/
 │   │   │   ├── scheme_categories/
 │   │   │   └── scheme_categories_search/
-│   │   │
 │   │   ├── details/
 │   │   ├── eligibility/
 │   │   ├── home/
@@ -276,7 +199,6 @@ YojanaAI/
 │   │   ├── documents/
 │   │   │   ├── chunk.py
 │   │   │   └── loads.py
-│   │   │
 │   │   ├── chain.py
 │   │   ├── embedding_and_vectordb.py
 │   │   ├── graph.py
@@ -299,47 +221,46 @@ YojanaAI/
 
 ---
 
-# 🛠️ Technology Stack
+## Technology Stack
 
-## Frontend & Full Stack
+### Frontend / Full Stack
 
-* **Next.js**
-* **React**
-* **JavaScript**
-* **Tailwind CSS**
-* **React Icons**
-* **React Markdown**
+* Next.js
+* React
+* JavaScript
+* Tailwind CSS
+* React Icons
+* React Markdown
 
-## Application Backend
+### Next.js Backend
 
-* **Next.js Route Handlers**
-* **MongoDB**
-* **Mongoose**
+* Next.js Route Handlers
+* MongoDB
+* Mongoose
 
-## AI Backend
+### AI Backend
 
-* **Python**
-* **FastAPI**
-* **LangChain**
-* **LangGraph**
-* **Gemini**
-* **Qdrant**
+* Python
+* FastAPI
+* LangChain
+* LangGraph
+* Qdrant
+* Gemini models / embeddings
 
-## Infrastructure
+### Infrastructure
 
-* **Docker**
-* **Qdrant**
-* **MongoDB**
-* **Git**
-* **GitHub**
+* Docker
+* Qdrant
+* MongoDB
+* Git / GitHub
 
 ---
 
-# 🚀 Getting Started
+## Getting Started
 
-## Prerequisites
+### Prerequisites
 
-Make sure the following are installed:
+Install the following before running the project:
 
 * Node.js
 * npm
@@ -357,32 +278,26 @@ python --version
 docker --version
 ```
 
----
-
-## 1. Clone the Repository
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/rimc008/YojanaAi.git
 cd YojanaAi
 ```
 
----
-
-## 2. Install Frontend Dependencies
+### 2. Install Frontend Dependencies
 
 ```bash
 npm install
 ```
 
----
-
-## 3. Configure Environment Variables
+### 3. Configure Environment Variables
 
 Create the required environment files locally.
 
-### Root `.env`
+#### Root `.env`
 
-The root environment file contains variables required by the Next.js application.
+The root environment file contains variables required by the Next.js application, such as the MongoDB connection and other application/API configuration.
 
 Example:
 
@@ -392,7 +307,7 @@ MONGODB_URI=your_mongodb_connection_string
 
 Add any additional variables required by the application.
 
-### Python AI `.env`
+#### Python AI `.env`
 
 Create:
 
@@ -406,17 +321,17 @@ Example:
 GOOGLE_API_KEY=your_google_api_key
 ```
 
-Add any additional AI/Qdrant configuration required by the current implementation.
+Add the remaining AI/Qdrant configuration required by the current implementation.
 
-> **Never commit API keys, database credentials, or other secrets to GitHub.**
+> **Important:** Never commit real API keys, database credentials, or secrets to GitHub.
 
----
-
-# 🐳 4. Start Qdrant
+### 4. Start Qdrant
 
 The AI service uses Qdrant as its vector database.
 
-Qdrant can be run locally using Docker:
+The project can run Qdrant using Docker.
+
+Example:
 
 ```bash
 docker run -d \
@@ -426,37 +341,30 @@ docker run -d \
   qdrant/qdrant
 ```
 
-Check the container:
+Check that the container is running:
 
 ```bash
 docker ps
 ```
 
-Qdrant will be available locally at:
+Qdrant's local dashboard/API is available at:
 
 ```text
 http://localhost:6333
 ```
 
-For persistent storage, use a Docker volume.
+The Qdrant data can be persisted using a Docker volume.
 
-Example:
+### 5. Prepare the Scheme Data
 
-```bash
-docker volume create qdrant_storage
-```
-
----
-
-# 🗂️ 5. Prepare Scheme Data
-
-The project contains utilities for preparing scheme data:
+The Python backend contains utilities for preparing scheme data:
 
 ```text
-backend/csv_to_json.py
+backend/
+└── csv_to_json.py
 ```
 
-The document preparation pipeline is located at:
+The document pipeline is located at:
 
 ```text
 backend/ai/documents/
@@ -464,25 +372,25 @@ backend/ai/documents/
 └── chunk.py
 ```
 
-The general process is:
+The general data flow is:
 
 ```text
-Dataset
-   ↓
+Scheme Dataset
+      ↓
 Load Documents
-   ↓
+      ↓
 Create LangChain Documents
-   ↓
+      ↓
 Chunk Documents
-   ↓
+      ↓
 Generate Embeddings
-   ↓
-Store in Qdrant
+      ↓
+Store Vectors in Qdrant
 ```
 
----
+The vector database only needs to be populated when the scheme dataset or embedding configuration requires re-indexing.
 
-# 🐍 6. Run the Python AI Backend
+### 6. Run the Python AI Backend
 
 Move into the backend directory:
 
@@ -490,55 +398,47 @@ Move into the backend directory:
 cd backend
 ```
 
-Create a virtual environment:
+Create a virtual environment if one does not already exist:
 
 ```bash
 python -m venv venv
 ```
 
-### Windows PowerShell
+Activate it on Windows PowerShell:
 
 ```powershell
 .\venv\Scripts\Activate.ps1
 ```
 
-Install dependencies:
+Install the required Python packages:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Start FastAPI:
+Then start FastAPI:
 
 ```bash
 uvicorn ai.server:app --reload
 ```
 
-Depending on the working directory and module structure, the command may instead be:
+Depending on the module location and working directory, the command may instead be:
 
 ```bash
 uvicorn server:app --reload
 ```
 
-The module path must match the location of `server.py`.
+The important part is that the module path must match the location of `server.py`.
 
-The local AI service will normally run at:
+The local AI API will normally be available at:
 
 ```text
 http://127.0.0.1:8000
 ```
 
----
+### 7. Run the Next.js Application
 
-# 🌐 7. Run the Next.js Application
-
-Return to the project root:
-
-```bash
-cd ..
-```
-
-Start the development server:
+From the project root:
 
 ```bash
 npm run dev
@@ -552,60 +452,112 @@ http://localhost:3000
 
 ---
 
-# 🔄 Local Development Architecture
+## Development Flow
 
-A typical local setup contains three running services:
+A typical local development setup consists of three services.
+
+### Terminal 1 — Qdrant
 
 ```text
-┌───────────────────────────────────────────────┐
-│                  Terminal 1                   │
-│                                               │
-│              Docker / Qdrant                  │
-│              localhost:6333                   │
-└───────────────────────────────────────────────┘
+Qdrant
+Docker container
+localhost:6333
+```
 
+### Terminal 2 — Python AI API
 
-┌───────────────────────────────────────────────┐
-│                  Terminal 2                   │
-│                                               │
-│             Python / FastAPI                  │
-│              localhost:8000                   │
-└───────────────────────────────────────────────┘
+```text
+FastAPI
+localhost:8000
+```
 
+### Terminal 3 — Next.js
 
-┌───────────────────────────────────────────────┐
-│                  Terminal 3                   │
-│                                               │
-│              Next.js                          │
-│              localhost:3000                   │
-└───────────────────────────────────────────────┘
+```text
+Frontend + Next.js API
+localhost:3000
 ```
 
 The browser communicates with the Next.js application.
 
-The Next.js application communicates with:
+The Next.js application communicates with MongoDB for scheme/application data and with the Python AI service when AI functionality is required.
 
-* MongoDB for structured scheme data
-* Python/FastAPI for AI functionality
-
-The Python AI service communicates with:
-
-* Qdrant for vector retrieval
-* Gemini/model providers for embeddings and AI processing
+The Python AI service communicates with Qdrant for vector retrieval.
 
 ---
 
-# 🔌 Next.js API Routes
+## AI Retrieval Pipeline
 
-Application-specific server-side APIs are located under:
+The AI recommendation flow follows this general architecture:
+
+```text
+User Situation / Query
+          ↓
+      Next.js
+          ↓
+     Python API
+          ↓
+      Embedding
+          ↓
+       Qdrant
+          ↓
+ Semantic / MMR Retrieval
+          ↓
+ Retrieved Scheme Context
+          ↓
+   LangChain / LangGraph
+          ↓
+       Gemini
+          ↓
+ Recommended Schemes
+          ↓
+       Next.js UI
+```
+
+### Document Indexing
+
+The indexing pipeline prepares scheme documents and stores their vector representations.
+
+Relevant files:
+
+```text
+backend/ai/documents/loads.py
+backend/ai/documents/chunk.py
+backend/ai/embedding_and_vectordb.py
+```
+
+### Retrieval
+
+Retrieval-related functionality includes:
+
+```text
+backend/ai/mmrretriever.py
+```
+
+The project uses retrieval to identify scheme documents semantically related to the user's situation.
+
+### AI Orchestration
+
+The AI pipeline is organized across:
+
+```text
+backend/ai/chain.py
+backend/ai/graph.py
+```
+
+---
+
+## Next.js API Routes
+
+The application's server-side API routes are organized under:
 
 ```text
 src/app/api/
 ```
 
-### Available API Areas
+Current areas include:
 
-| Route                      | Responsibility                             |
+| Route                      | Purpose                                    |
 | -------------------------- | ------------------------------------------ |
 | `details_scheme`           | Retrieve scheme details                    |
 | `eligibility_search`       | Find schemes using eligibility information |
@@ -614,179 +566,100 @@ src/app/api/
 | `scheme_categories`        | Retrieve scheme categories                 |
 | `scheme_categories_search` | Search schemes by category                 |
 
-The exact request and response structures are defined by the implementation of each route.
+The exact request/response structure is defined by the implementation in each route.
 
 ---
 
-# 🗃️ Database Layer
+## State Management
 
-## MongoDB
-
-MongoDB stores structured scheme information used by the main application.
-
-Connection:
-
-```text
-src/lib/mongodb.js
-```
-
-Scheme model:
-
-```text
-src/models/schemes_.js
-```
-
----
-
-## Qdrant
-
-Qdrant stores vector representations of scheme documents used by the AI retrieval system.
-
-### Local Development
-
-```text
-http://localhost:6333
-```
-
-### Production
-
-The AI service must use the appropriate production Qdrant endpoint instead of the local Docker address.
-
-For example:
-
-```env
-QDRANT_URL=your_qdrant_endpoint
-```
-
-The exact environment variable name should match the implementation.
-
----
-
-# 🧠 AI Components
-
-### Document Loading
-
-```text
-backend/ai/documents/loads.py
-```
-
-Loads scheme information and prepares it for the document pipeline.
-
-### Document Chunking
-
-```text
-backend/ai/documents/chunk.py
-```
-
-Splits scheme documents into chunks suitable for embedding and retrieval.
-
-### Embeddings & Vector Database
-
-```text
-backend/ai/embedding_and_vectordb.py
-```
-
-Responsible for generating embeddings and storing them in Qdrant.
-
-### Retrieval
-
-```text
-backend/ai/mmrretriever.py
-```
-
-Handles retrieval of relevant scheme information using vector search and MMR-based retrieval.
-
-### AI Chain
-
-```text
-backend/ai/chain.py
-```
-
-Contains the AI processing chain.
-
-### LangGraph
-
-```text
-backend/ai/graph.py
-```
-
-Contains the graph-based AI orchestration.
-
-### FastAPI Server
-
-```text
-backend/ai/server.py
-```
-
-Exposes the Python AI functionality through HTTP APIs.
-
----
-
-# 🧩 State Management
-
-The application uses React Context API.
-
-Location:
+The project uses React Context API:
 
 ```text
 src/context/AppContext.js
 ```
 
-The context currently maintains shared state including:
+The provider maintains shared client-side state such as:
 
-```text
-client_message
-aiclient
-filteredSchemes
-message
-messages
-chat_history
-a
-```
+* `client_message`
+* `aiclient`
+* `filteredSchemes`
+* `message`
+* `messages`
+* `chat_history`
+* `a`
 
-For example, eligibility results can be stored in the shared `a` state and remain available while the context provider remains mounted.
+For example, eligibility results can be stored in the shared `a` state and remain available while the provider remains mounted.
 
 ---
 
-# ☁️ Production Deployment
+## Database Layer
 
-YojanaAI consists of multiple services and should therefore be deployed as a multi-service architecture.
+### MongoDB
 
-A production deployment can be structured as:
+MongoDB stores the application's structured scheme information.
+
+The database connection is handled by:
 
 ```text
-                         ┌─────────────────┐
-                         │     Browser     │
-                         └────────┬────────┘
-                                  │
-                                  ▼
-                         ┌─────────────────┐
-                         │     Next.js     │
-                         │   Application   │
-                         └───────┬─────────┘
-                                 │
-                    ┌────────────┴────────────┐
-                    │                         │
-                    ▼                         ▼
-           ┌─────────────────┐       ┌─────────────────┐
-           │     MongoDB     │       │    AI Service   │
-           │                 │       │     FastAPI     │
-           └─────────────────┘       └────────┬────────┘
-                                              │
-                                              ▼
-                                     ┌─────────────────┐
-                                     │     Qdrant      │
-                                     │ Vector Database │
-                                     └─────────────────┘
+src/lib/mongodb.js
 ```
 
-For platforms such as **Railway**, these components can be deployed as separate services.
+The scheme model is defined in:
+
+```text
+src/models/schemes_.js
+```
+
+### Qdrant
+
+Qdrant stores vector representations used by the AI retrieval system.
+
+Local development:
+
+```text
+http://localhost:6333
+```
+
+In production, the AI service must be configured with the appropriate Qdrant endpoint rather than the local Docker address.
 
 ---
 
-# ⚙️ Production Configuration
+## Production Deployment
 
-Local development may use:
+The project consists of multiple services, so deployment should be treated as a multi-service architecture.
+
+A production deployment can contain:
+
+```text
+                    ┌─────────────────┐
+                    │     Browser     │
+                    └────────┬────────┘
+                             │
+                             ▼
+                    ┌─────────────────┐
+                    │     Next.js     │
+                    │    Application  │
+                    └───────┬─────────┘
+                            │
+                 ┌──────────┴──────────┐
+                 │                     │
+                 ▼                     ▼
+        ┌─────────────────┐   ┌─────────────────┐
+        │     MongoDB     │   │    AI Service   │
+        └─────────────────┘   │     FastAPI     │
+                              └────────┬────────┘
+                                       │
+                                       ▼
+                              ┌─────────────────┐
+                              │     Qdrant      │
+                              └─────────────────┘
+```
+
+For Railway or another container-based platform, these can be deployed as separate services.
+
+### Important
+
+Do not keep production configuration such as:
 
 ```text
 localhost:3000
@@ -794,9 +667,9 @@ localhost:8000
 localhost:6333
 ```
 
-These addresses should **not** be used for communication between production services.
+in code that is expected to communicate between deployed services.
 
-Instead, configure service URLs through environment variables.
+Use environment variables for service URLs.
 
 For example:
 
@@ -805,43 +678,38 @@ NEXT_PUBLIC_AI_API_URL=https://your-ai-service.example
 QDRANT_URL=https://your-qdrant-service.example
 ```
 
-The exact variable names should match the application's implementation.
-
-When supported by the hosting platform, private service networking can be used for internal service-to-service communication.
+The exact variable names should match the implementation.
 
 ---
 
-# 🔐 Security
+## Security
 
-Never commit sensitive information to GitHub.
-
-Do not commit:
+Never commit:
 
 ```text
 .env
 .env.local
 API keys
-Database passwords
-Private credentials
+database passwords
+private credentials
 ```
 
-Use environment variables for production secrets.
+Make sure `.gitignore` contains appropriate environment and generated files.
 
-Recommended production practices:
+For production:
 
-* Use HTTPS
-* Keep secrets in deployment environment variables
-* Restrict database access where possible
-* Configure CORS correctly
-* Avoid exposing private credentials to client-side JavaScript
-* Use private service networking for internal services when available
-* Keep development and production credentials separate
+* Use environment variables for secrets.
+* Restrict database access where possible.
+* Use HTTPS.
+* Configure CORS appropriately for the deployed frontend.
+* Do not expose private credentials to browser-side JavaScript.
+* Use private service networking where supported by the deployment platform.
 
 ---
 
-# 🧪 Useful Commands
+## Useful Commands
 
-## Next.js
+### Next.js
 
 ```bash
 npm install
@@ -850,17 +718,14 @@ npm run build
 npm start
 ```
 
-## Python
+### Python
 
 ```powershell
 .\venv\Scripts\Activate.ps1
-```
-
-```bash
 uvicorn ai.server:app --reload
 ```
 
-## Docker
+### Docker
 
 ```bash
 docker ps
@@ -870,7 +735,7 @@ docker stop qdrant
 docker logs qdrant
 ```
 
-## Git
+### Git
 
 ```bash
 git status
@@ -881,113 +746,51 @@ git push
 
 ---
 
-# 📌 Project at a Glance
+## Project Structure at a Glance
 
 ```text
 YojanaAI
 │
-├── 🌐 Next.js Application
-│   ├── User Interface
-│   ├── Routing
+├── Next.js Application
+│   ├── Pages / UI
 │   ├── API Routes
 │   ├── React Context
-│   ├── MongoDB Integration
-│   └── Scheme Management
+│   ├── MongoDB Layer
+│   └── Scheme Models
 │
-├── 🤖 Python AI Service
+├── Python AI Service
 │   ├── Document Loading
 │   ├── Chunking
 │   ├── Embeddings
 │   ├── Qdrant Retrieval
-│   ├── MMR Retrieval
 │   ├── LangChain
 │   ├── LangGraph
 │   └── FastAPI
 │
-└── 🏗️ Infrastructure
+└── Infrastructure
     ├── MongoDB
     ├── Qdrant
-    ├── Docker
-    └── GitHub
+    └── Docker
 ```
 
 ---
 
-# 🎯 Design Philosophy
+## Development Philosophy
 
-YojanaAI separates application responsibilities from AI responsibilities.
+YojanaAI separates responsibilities between the application layer and the AI layer:
 
-### Next.js
+* **Next.js** handles the user experience, routing, application APIs, and structured scheme operations.
+* **MongoDB** handles structured application data.
+* **Python/FastAPI** handles AI-specific processing.
+* **Qdrant** handles vector storage and semantic retrieval.
+* **LangChain/LangGraph** organize the AI and retrieval workflow.
 
-Handles:
-
-* User experience
-* Routing
-* Scheme discovery
-* Eligibility forms
-* Application APIs
-* Structured scheme operations
-
-### MongoDB
-
-Handles:
-
-* Structured scheme information
-* Application-level data
-
-### Python / FastAPI
-
-Handles:
-
-* AI processing
-* Embeddings
-* Retrieval
-* AI orchestration
-
-### Qdrant
-
-Handles:
-
-* Vector storage
-* Semantic search
-* Retrieval
-
-### LangChain / LangGraph
-
-Handle:
-
-* AI pipeline organization
-* Retrieval workflow
-* AI orchestration
-
-This separation allows the AI service to remain independently deployable while keeping the main web application focused on application-level functionality.
+This separation makes the AI service independently deployable and keeps the main web application focused on application-level responsibilities.
 
 ---
 
-# 🚧 Project Status
+## Status
 
-**YojanaAI is an actively developed full-stack AI project.**
+YojanaAI is an actively developed full-stack AI project combining:
 
-Current technology stack:
-
-```text
-Next.js
-+
-React
-+
-MongoDB
-+
-FastAPI
-+
-LangChain
-+
-LangGraph
-+
-Gemini
-+
-Qdrant
-+
-Docker
-```
-
-The project brings together traditional structured eligibility filtering with semantic AI-powered scheme discovery to provide multiple ways for users to find relevant government schemes.
+**Next.js + React + MongoDB + FastAPI + LangChain + LangGraph + Gemini + Qdrant + Docker**
