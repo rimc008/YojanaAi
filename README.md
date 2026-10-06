@@ -86,34 +86,34 @@ React Context API is used for shared client-side state, including:
 
 ```text
                          ┌──────────────────────┐
-                         │        User          │
+                         │           User           │
                          └──────────┬───────────┘
-                                    │
-                                    ▼
+                                      │
+                                      ▼
                          ┌──────────────────────┐
-                         │      Next.js App     │
-                         │       Frontend       │
+                         │         Next.js App      │
+                         │          Frontend        │
                          └──────────┬───────────┘
-                                    │
-                 ┌──────────────────┴──────────────────┐
-                 │                                     │
-                 ▼                                     ▼
+                                      │
+                 ┌─────────────────┴──────────────────┐
+                 │                                           │
+                 ▼                                          ▼
        ┌─────────────────────┐              ┌─────────────────────┐
-       │     Next.js API     │              │    Python AI API    │
-       │    Route Handlers   │              │       FastAPI       │
+       │     Next.js API         │              │       Python AI API    │
+       │    Route Handlers       │              │          FastAPI       │
        └──────────┬──────────┘              └──────────┬──────────┘
-                  │                                    │
-                  ▼                                    ▼
+                    │                                        │
+                    ▼                                       ▼
        ┌─────────────────────┐              ┌─────────────────────┐
-       │      MongoDB        │              │       Qdrant        │
-       │   Scheme Database   │              │   Vector Database   │
+       │      MongoDB            │              │       Qdrant            │
+       │   Scheme Database       │              │   Vector Database       │
        └─────────────────────┘              └─────────────────────┘
-                                                     │
-                                                     ▼
-                                            ┌─────────────────────┐
-                                            │    Gemini / LLM      │
-                                            │  Embeddings + AI     │
-                                            └─────────────────────┘
+                                                             │
+                                                             ▼
+                                                ┌─────────────────────┐
+                                                │       Gemini / LLM      │
+                                                │     Embeddings + AI     │
+                                                └─────────────────────┘
 ```
 
 ---
