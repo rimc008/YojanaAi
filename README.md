@@ -105,14 +105,14 @@ React Context API is used for shared client-side state, including:
                     │                                        │
                     ▼                                       ▼
        ┌─────────────────────┐              ┌─────────────────────┐
-       │      MongoDB            │              │       Qdrant            │
-       │   Scheme Database       │              │   Vector Database       │
+       │      MongoDB            │              │          Qdrant        │
+       │   Scheme Database       │              │      Vector Database   │
        └─────────────────────┘              └─────────────────────┘
                                                              │
                                                              ▼
                                                 ┌─────────────────────┐
-                                                │       Gemini / LLM      │
-                                                │     Embeddings + AI     │
+                                                │        Groq / LLM       │
+                                                │      Embeddings + AI    │
                                                 └─────────────────────┘
 ```
 
