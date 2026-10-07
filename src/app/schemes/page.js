@@ -467,8 +467,8 @@ export default function SchemesPage() {
                 "
               >
 
-                {categories.map((item) => (
-                  <option key={item} value={item}>
+                {categories.map((item,index) => (
+                  <option key={index} value={item}>
                     {item}
                   </option>
                 ))}
