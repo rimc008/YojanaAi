@@ -4,8 +4,11 @@
 
 ## Overview
 
-YojanaAI combines a modern **Next.js web application** with a **Python-based AI service** and a **Qdrant vector database**.
+**YojanaAI** is an AI-powered platform designed to make discovering and understanding Indian government schemes easier. It combines a modern **Next.js web application**, a **Python-based AI backend built with FastAPI**, and **Qdrant vector search** to deliver intelligent, context-aware scheme recommendations.
 
+By leveraging **Retrieval-Augmented Generation (RAG)**, semantic search, and user eligibility criteria, YojanaAI helps users discover relevant government schemes, understand their benefits, and identify opportunities that match their needs.
+
+The platform integrates **MongoDB** for structured scheme data and user-related information, while **Qdrant** enables efficient semantic retrieval. Its modular architecture separates the frontend, AI service, and data layers, making the application scalable, maintainable, and ready for future enhancements.
 The platform provides two complementary discovery flows:
 
 * **Eligibility Search** — filters government schemes using structured user information such as age, gender, state, income, and areas of need.
