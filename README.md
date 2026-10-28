@@ -120,6 +120,8 @@ React Context API is used for shared client-side state, including:
 ```
 
 ---
+## Git diagram 
+[![Architecture diagram of rimc008/yojanaai](https://gitdiagram.com/rimc008/yojanaai/diagram.png)](https://gitdiagram.com/rimc008/yojanaai?utm_source=readme&utm_medium=picture)
 
 ## Backend Responsibilities
 
