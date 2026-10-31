@@ -18,9 +18,9 @@ import Link from "next/link";
 import { MdHealthAndSafety } from "react-icons/md";
 
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
-export default function SchemeCategoriesSearch() {
+function SchemeCategoriesContent() {
 
     const searchParams = useSearchParams();
 
@@ -219,5 +219,13 @@ function SectionTitle({
 
         </div>
 
+    );
+}
+
+export default function SchemeCategoriesSearch() {
+    return (
+        <Suspense fallback={<div className="p-8">Loading...</div>}>
+            <SchemeCategoriesContent />
+        </Suspense>
     );
 }
