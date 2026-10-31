@@ -210,7 +210,7 @@ export default function EligibilityPage() {
 
 
       const response = await fetch(
-        "http://localhost:3000/api/eligibility_search",
+        "/api/eligibility_search",
         {
           method: "POST",
           body: formdata,

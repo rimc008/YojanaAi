@@ -68,7 +68,7 @@ export default function AIRecommendation() {
         ]);
 
         try {
-            const response = await fetch(
+            const response = await fetch(process.env.NEXT_PUBLIC_AI_URL ||
                 "http://127.0.0.1:8000/api/ai",
                 {
                     method: "POST",

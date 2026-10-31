@@ -61,7 +61,7 @@ export default function Home() {
     const categories_function = async() => {
       try {
 
-        const as = await fetch("http://localhost:3000/api/scheme_categories",
+        const as = await fetch("/api/scheme_categories",
           {
             method:"GET",
             headers : {"Content-Type":"application/json"}
@@ -87,7 +87,7 @@ export default function Home() {
     const featuredSchemes_function = async() => {
       try {
 
-        const as = await fetch("http://localhost:3000/api/featured_schemes",
+        const as = await fetch("/api/featured_schemes",
           {
             method:"GET",
             headers : {"Content-Type":"application/json"}

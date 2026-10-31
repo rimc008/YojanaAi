@@ -68,7 +68,7 @@ export default function SchemeCategoriesSearch() {
             
 
             const response = await fetch(
-                `http://localhost:3000/api/scheme_categories_search?${params.toString()}`)
+                `/api/scheme_categories_search?${params.toString()}`)
 
             const data = await response.json();
 

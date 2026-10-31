@@ -82,7 +82,7 @@ export default function SchemeDetails() {
             try {
 
                 const as = await fetch(
-                    `http://localhost:3000/api/details_scheme/${slug}`,
+                    `/api/details_scheme/${slug}`,
                     {
                         method: "GET",
                         headers: {

@@ -104,7 +104,30 @@ prompt = ChatPromptTemplate.from_messages([
 
         9. The answer must be to the point and brief.
 
-        10. The answer field must be finished within 4 lines max.
+        10. The answer field must be finished within 6 lines max.
+
+        11. ELIGIBILITY:
+           - Compare the user's age, gender, state,
+             education, occupation and other provided
+             details against the retrieved eligibility.
+           - Do not claim eligibility unless all required
+             conditions are supported by the context.
+           - Distinguish between potentially eligible,
+             ineligible and insufficient information.
+           - Do not assume that missing information
+             means the user qualifies.
+
+        12. RELEVANCE:
+           - Recommend only schemes relevant to the
+             user's actual question and circumstances.
+           - Do not include unrelated schemes merely
+             to increase the number of results.
+
+        13. MISSING INFORMATION:
+           - Clearly mention when eligibility, benefits,
+             application links or other details are
+             unavailable in the retrieved context.
+           - Never create an application URL.
 
         Retrieved scheme information:
 

@@ -131,7 +131,7 @@ export default function SchemesPage() {
 
     try {
 
-        const as = await fetch("http://localhost:3000/api/filters",
+        const as = await fetch("/api/filters",
           {
             method:"POST",
             headers : {"Content-Type":"application/json"},
