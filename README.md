@@ -24,6 +24,9 @@ The application also provides:
 * A centralized client-side state management layer
 
 ---
+## Live Demo 
+https://yojana-ai-eight.vercel.app/
+
 ## Demo video
 ### Full website demo video 
 https://github.com/user-attachments/assets/697b2581-2640-477d-8bff-bc8913d780cf
