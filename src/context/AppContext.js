@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useState ,useEffect} from "react"
+import { createContext, useState } from "react"
 
 export const AppContext = createContext();
 
@@ -13,12 +13,14 @@ export default function AppContextProvider({children}){
     const [messages, setMessages] = useState([]);
     const [chat_history, setChat_history] = useState([]);
     const [a, setA] = useState([]);
+    const [categories,setCategories] = useState([]);
+    const [featuredSchemes,setFeaturedSchemes] = useState([]);
 
 
     
 
     return (
-        <AppContext.Provider value={{ client_message,setClient_message,aiclient,setAiclient,filteredSchemes,setFilteredSchemes,message,setMessage,messages,setMessages,chat_history,setChat_history,a,setA}}>
+        <AppContext.Provider value={{ client_message,setClient_message,aiclient,setAiclient,filteredSchemes,setFilteredSchemes,message,setMessage,messages,setMessages,chat_history,setChat_history,a,setA,categories,setCategories,featuredSchemes,setFeaturedSchemes}}>
             {children}
         </AppContext.Provider>
     )

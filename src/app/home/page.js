@@ -49,11 +49,9 @@ function getCategoryIcon(categoryName) {
 
 export default function Home() {
 
-  const {client_message,setClient_message,aiclient,setAiclient} = useContext(AppContext)
+  const {client_message,setClient_message,aiclient,setAiclient,categories,setCategories,featuredSchemes,setFeaturedSchemes} = useContext(AppContext)
 
-  const [categories,setCategories] = useState([])
   const [viewall,setViewall] = useState(false)
-  const [featuredSchemes,setFeaturedSchemes] = useState([])
   const [browseall,setBrowseall] = useState(false)
 
   useEffect(()=>{
